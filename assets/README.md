@@ -1,0 +1,1 @@
+Directory containing images, media, or other general assets.
