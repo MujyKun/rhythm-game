@@ -11,14 +11,13 @@ def setup(scene: ppb.Scene):
     sprites = [
         Player(
             position=(5, 5),
-            vertical_movement=True,
-            horizontal_movement=False,
+            vertical_movement=False,
+            horizontal_movement=True,
             jump_movement=True,
             image_location="assets/ball.png",
         ),
         Tile(
-            position=(-200, -200), image_location="assets/tile.png", width=10, height=10
-        ),
+            position=(5, -8), image_location="assets/tile.png"),
     ]
 
     for sprite in sprites:
