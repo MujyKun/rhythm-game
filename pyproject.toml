@@ -8,6 +8,7 @@ authors = ["MujyKun <mujy@irenebot.com>", "DrewBieger"]
 python = "^3.10"
 ppb = "^1.1"
 pysdl2-dll = "2.0.20"
+black = "^22.10.0"
 
 [tool.poetry.dev-dependencies]
 

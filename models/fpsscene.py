@@ -33,9 +33,11 @@ class FPSScene(Scene):
             self.remove(self._frame_label)
 
         if not self._fps_placement:
-            self._fps_placement = (-self.main_camera.width / 2 + 2, self.main_camera.height / 2 - 0.5)
+            self._fps_placement = (
+                -self.main_camera.width / 2 + 2,
+                self.main_camera.height / 2 - 0.5,
+            )
 
         self._frame_label = Label(f"{self.avg_frame_rate:.2f} FPS")
         self._frame_label.position = ppb.Vector(self._fps_placement)
         self.add(self._frame_label)
-

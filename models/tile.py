@@ -19,7 +19,15 @@ class Tile(RectangleSprite):
     width: int
         Width of the tile.
     """
-    def __init__(self, position: tuple = None, width=None, height=None, image_location="assets/default.png", **kwargs):
+
+    def __init__(
+        self,
+        position: tuple = None,
+        width=None,
+        height=None,
+        image_location="assets/default.png",
+        **kwargs
+    ):
         super(Tile, self).__init__(**kwargs)
         if width:
             self.width = width

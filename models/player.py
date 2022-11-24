@@ -38,6 +38,7 @@ class Player(Sprite):
     pressed_keys: List[ppb.keycodes.KeyCode]
         A list of key codes that are currently being pressed.
     """
+
     LEFT = keycodes.Left
     RIGHT = keycodes.Right
     UP = keycodes.Up
@@ -49,9 +50,17 @@ class Player(Sprite):
     MOVEMENT_AMPLITUDE = 1
     ZOOM_AMPLITUDE = 2
 
-    def __init__(self, position: tuple = None, direction: tuple = None,
-                 horizontal_movement=False, vertical_movement=False, jump_movement=False, scrollable_camera=True,
-                 zoom_camera=True, image_location="assets/default.png"):
+    def __init__(
+        self,
+        position: tuple = None,
+        direction: tuple = None,
+        horizontal_movement=False,
+        vertical_movement=False,
+        jump_movement=False,
+        scrollable_camera=True,
+        zoom_camera=True,
+        image_location="assets/default.png",
+    ):
         super(Player, self).__init__()
         position = position or (0, 0)
         direction = direction or (0, 0)
@@ -67,7 +76,7 @@ class Player(Sprite):
         self._scrollable_camera = scrollable_camera
         self.scene = None
         self.pressed_keys = []
-        
+
     def on_update(self, event, signal):
         scene = self.scene = event.scene
         for tile in scene.get(kind=Tile):
@@ -106,14 +115,30 @@ class Player(Sprite):
         """Control the player movement."""
         if self._horizontal_movement:
             if key_event.key == self.LEFT:
-                self.direction += Vector(-self.MOVEMENT_AMPLITUDE, 0) if not reverse_motion else Vector(self.MOVEMENT_AMPLITUDE, 0)
+                self.direction += (
+                    Vector(-self.MOVEMENT_AMPLITUDE, 0)
+                    if not reverse_motion
+                    else Vector(self.MOVEMENT_AMPLITUDE, 0)
+                )
             elif key_event.key == self.RIGHT:
-                self.direction += Vector(self.MOVEMENT_AMPLITUDE, 0) if not reverse_motion else Vector(-self.MOVEMENT_AMPLITUDE, 0)
+                self.direction += (
+                    Vector(self.MOVEMENT_AMPLITUDE, 0)
+                    if not reverse_motion
+                    else Vector(-self.MOVEMENT_AMPLITUDE, 0)
+                )
         if self._vertical_movement:
             if key_event.key == self.UP:
-                self.direction += Vector(0, self.MOVEMENT_AMPLITUDE) if not reverse_motion else Vector(0, -self.MOVEMENT_AMPLITUDE)
+                self.direction += (
+                    Vector(0, self.MOVEMENT_AMPLITUDE)
+                    if not reverse_motion
+                    else Vector(0, -self.MOVEMENT_AMPLITUDE)
+                )
             elif key_event.key == self.DOWN:
-                self.direction += Vector(0, -self.MOVEMENT_AMPLITUDE) if not reverse_motion else Vector(0, self.MOVEMENT_AMPLITUDE)
+                self.direction += (
+                    Vector(0, -self.MOVEMENT_AMPLITUDE)
+                    if not reverse_motion
+                    else Vector(0, self.MOVEMENT_AMPLITUDE)
+                )
         if self._jump_movement:
             if key_event.key == self.JUMP and not reverse_motion:
                 self.direction += Vector(0, self.MOVEMENT_AMPLITUDE)

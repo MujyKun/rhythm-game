@@ -13,4 +13,3 @@ class Label(Sprite):
     def update_text(self, text):
         self._text = text
         self.image = Text(text, font=self._font)
-
