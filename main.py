@@ -1,23 +1,22 @@
 import logging
 
 import ppb
-from models import Player, Label, FPSScene
+from models import Player, Label, FPSScene, Tile
+
+RES = (1080, 720)
 
 
 def setup(scene: ppb.Scene):
     scene.background_color = (255, 255, 255)
     sprites = [
-        Player(position=(0, 0), vertical_movement=True, horizontal_movement=True, image_location="assets/test1.jpg"),
-        Player(position=(0, 5), vertical_movement=True, horizontal_movement=True, image_location="assets/fav.png"),
-        Player(position=(5, 0), vertical_movement=False, horizontal_movement=True),
-        Player(position=(5, 5), vertical_movement=False, horizontal_movement=True),
+        Player(position=(5, 5), vertical_movement=True, horizontal_movement=False, jump_movement=True,
+               image_location="assets/ball.png"),
+        Tile(position=(-200, -200), image_location="assets/tile.png", width=10, height=10)
     ]
-
-    sprites[0].add(sprites[1])
 
     for sprite in sprites:
         scene.add(sprite)
 
 
 if __name__ == '__main__':
-    ppb.run(setup=setup, title="Rhythm", starting_scene=FPSScene, log_level=logging.INFO)
+    ppb.run(setup=setup, title="Rhythm", starting_scene=FPSScene, log_level=logging.INFO, resolution=RES)

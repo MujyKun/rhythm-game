@@ -4,15 +4,15 @@ from ppb import Scene
 
 
 class FPSScene(Scene):
-    reset_duration = 30  # seconds to reset fps count.
+    reset_duration = 1  # seconds to reset count.
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
         self.frames = 0
         self.start_time = ppb.get_time()
         self._frame_label = None
-        self._top_left_canvas = None
+        self._fps_placement = None
+        self.sound_playing = False
 
     @property
     def avg_frame_rate(self):
@@ -32,9 +32,10 @@ class FPSScene(Scene):
         if self._frame_label:
             self.remove(self._frame_label)
 
-        if not self._top_left_canvas:
-            self._top_left_canvas = (-self.main_camera.width / 2 + 2, self.main_camera.height / 2 - 0.5)
+        if not self._fps_placement:
+            self._fps_placement = (-self.main_camera.width / 2 + 2, self.main_camera.height / 2 - 0.5)
 
         self._frame_label = Label(f"{self.avg_frame_rate:.2f} FPS")
-        self._frame_label.position = ppb.Vector(self._top_left_canvas)
+        self._frame_label.position = ppb.Vector(self._fps_placement)
         self.add(self._frame_label)
+
