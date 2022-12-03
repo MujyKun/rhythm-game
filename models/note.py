@@ -37,6 +37,7 @@ class Note(RectangleSprite):
         self.speed = 0
         self.play_at = play_at or 0
         self.sound_to_play = ppb.events.PlaySound(self.sound)
+        self.layer = 0
 
     def on_update(self, event, signal):
         if self.visible:

@@ -83,6 +83,7 @@ class Player(Sprite):
         self.scene = None
         self.pressed_keys = []
         self._direction_walking = None
+        self.layer = 2
 
     def walk_left(self):
         """Make the animation walk left."""

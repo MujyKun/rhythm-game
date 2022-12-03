@@ -14,7 +14,7 @@ def setup(scene: ppb.Scene):
 
     test_song = Song.load("assets/testsong.json")
 
-    test_song.play(scene)
+    test_song.play(scene, volume=0.1)
     sprites = [
 
         Floor(

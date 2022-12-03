@@ -74,9 +74,9 @@ class Song:
                 tiles.append(Note(note, beat_number))
         return Song(name=song.get("name"), tiles=tiles, spread=spread)
 
-    def play(self, scene):
+    def play(self, scene, volume=0.1):
         """Play the song (game) in the scene."""
         for tile in self.tiles:
             scene.add(tile)
             tile.start(tile.position, speed=1)
-            tile.sound_to_play.sound.volume = 0.1
+            tile.sound_to_play.sound.volume = volume

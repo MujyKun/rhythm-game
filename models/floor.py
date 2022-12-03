@@ -35,3 +35,4 @@ class Floor(RectangleSprite):
             self.height = height
         self.position = Vector(*position)
         self.image = ppb.Image(image_location)
+        self.layer = 1
