@@ -15,7 +15,7 @@ def setup(scene: ppb.Scene):
     sprites = [
 
         Floor(
-            position=(0, 0), image_location="assets/floor.png", width=21.6),
+            position=(0, -8), image_location="assets/floor.png", width=30),
         Player(
             position=(5, 5),
             vertical_movement=False,
