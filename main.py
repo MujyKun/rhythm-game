@@ -1,23 +1,28 @@
 import logging
 
 import ppb
-from models import Player, Label, FPSScene, Tile
+from models import Player, Label, FPSScene, Floor, Note
 
 RES = (1080, 720)
 
 
 def setup(scene: ppb.Scene):
     scene.background_color = (255, 255, 255)
+
+    note = Note("a")
+    # scene.add(note)
+
     sprites = [
+
+        Floor(
+            position=(0, 0), image_location="assets/floor.png"),
         Player(
             position=(5, 5),
             vertical_movement=False,
             horizontal_movement=True,
             jump_movement=True,
-            image_location="assets/ball.png",
+            player_type="green"
         ),
-        Tile(
-            position=(5, -8), image_location="assets/tile.png"),
     ]
 
     for sprite in sprites:
