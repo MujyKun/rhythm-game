@@ -1,6 +1,6 @@
 import ppb
 from ppb import Sound, RectangleSprite, Image
-from models import Floor, Player
+from models import Floor, Player, is_colliding
 
 
 class Note(RectangleSprite):
@@ -11,6 +11,8 @@ class Note(RectangleSprite):
     ----------
     note_type: str
         The note to create
+    play_at: int
+        The beat number to play at.
 
     Attributes
     ----------
@@ -18,8 +20,10 @@ class Note(RectangleSprite):
         The position of the Note.
     direction: ppb.Vector/tuple
         The direction the note is heading (usually down).
+    play_at: int
+        The beat the note will play at.
     """
-    def __init__(self, note_type: str):
+    def __init__(self, note_type: str, play_at: int):
         super().__init__()
         # Set up img as another variable and image to None
         # so that we can "trick" the render not to render this Sprite.
@@ -31,16 +35,18 @@ class Note(RectangleSprite):
         self.position = ppb.Vector(0, 0)
         self.direction = ppb.Vector(0, -1)
         self.speed = 0
+        self.play_at = play_at or 0
+        self.sound_to_play = ppb.events.PlaySound(self.sound)
 
     def on_update(self, event, signal):
         if self.visible:
             scene = self.scene = event.scene
-            # for floor in scene.get(kind=Floor):
-            #     if (floor.position - self.position).length <= self.size:
-            #         self.reset()
-            #         self.play(signal)
-            for play in scene.get(kind=Player):
-                if (play.position - self.position).length <= self.size:
+            for floor in scene.get(kind=Floor):
+                if is_colliding(self, floor):
+                    self.reset()
+
+            for player in scene.get(kind=Player):
+                if is_colliding(self, player):
                     self.reset()
                     self.play(signal)
             self.position += self.direction * self.speed * event.time_delta
@@ -53,7 +59,7 @@ class Note(RectangleSprite):
 
     def start(self, position, speed):
         """
-        Starts the note's to move.
+        Makes the note start moving.
 
         Parameters
         ----------
@@ -75,11 +81,11 @@ class Note(RectangleSprite):
         signal: ppb.events.Signal
             The signal to invoke the PlaySound event.
         """
-        signal(ppb.events.PlaySound(self.sound))
+        signal(self.sound_to_play)
 
-    def on_key_pressed(self, key_event, signal):
-        if not self.visible:
-            self.start(position=(5, 5), speed=1)
+    # def on_key_pressed(self, key_event, signal):
+    #     if not self.visible:
+    #         self.start(position=(5, 5), speed=1)
 
     @property
     def visible(self):

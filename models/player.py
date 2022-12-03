@@ -3,7 +3,7 @@ from ppb import keycodes, Sprite, Vector
 from ppb.camera import Camera
 from ppb.events import KeyPressed, KeyReleased, PlaySound
 from ppb.features.animation import Animation
-from . import Floor, check_in_range
+from . import Floor, check_in_range, is_colliding
 
 
 class Player(Sprite):
@@ -104,28 +104,7 @@ class Player(Sprite):
         self.direction += Vector(0, -self.GRAVITY) * event.time_delta
 
         for floor in scene.get(kind=Floor):
-            f_top_left_x, f_top_left_y = floor.top_left
-            f_bottom_right_x, f_bottom_right_y = floor.bottom_right
-
-            top_left_x, top_left_y = self.top_left
-            bottom_right_x, bottom_right_y = self.bottom_right
-
-            f_y_vals = f_top_left_y, f_bottom_right_y
-            f_x_vals = f_top_left_x, f_bottom_right_x
-
-            x_range = [min(*f_x_vals), max(*f_x_vals)]
-            y_range = [min(*f_y_vals), max(*f_y_vals)]
-
-            x_colliding = False
-            y_colliding = False
-            for x in [top_left_x, bottom_right_x]:
-                if check_in_range(x, *x_range):
-                    x_colliding = True
-            for y in [top_left_y, bottom_right_y]:
-                if check_in_range(y, *y_range):
-                    y_colliding = True
-
-            if x_colliding and y_colliding:
+            if is_colliding(self, floor):
                 if self.direction[1] <= 0:
                     self.direction = Vector(self.direction[0], 0)
 
