@@ -13,6 +13,8 @@ class FPSScene(Scene):
         self._frame_label = None
         self._fps_placement = None
         self.sound_playing = False
+        self._mouse_pos_label = None
+        self._mouse_placement = None
 
     @property
     def avg_frame_rate(self):
@@ -37,3 +39,18 @@ class FPSScene(Scene):
         self._frame_label = Label(f"{self.avg_frame_rate:.2f} FPS", size=50)
         self._frame_label.position = ppb.Vector(self._fps_placement)
         self.add(self._frame_label)
+
+    def on_mouse_motion(self, mouse_motion: ppb.events.MouseMotion, signal):
+        if self._mouse_pos_label:
+            self.remove(self._mouse_pos_label)
+
+        if not self._fps_placement:
+            return
+
+        self._mouse_placement = self._fps_placement[0] + 0.3, self._fps_placement[1] - 0.8
+        self._mouse_pos_label = Label(f"({mouse_motion.position[0]:.2f}, {mouse_motion.position[1]:.2f})", size=50)
+        self._mouse_pos_label.position = ppb.Vector(self._mouse_placement)
+        self.add(self._mouse_pos_label)
+
+
+

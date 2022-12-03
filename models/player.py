@@ -106,18 +106,15 @@ class Player(Sprite):
         for floor in scene.get(kind=Floor):
             f_top_left_x, f_top_left_y = floor.top_left
             f_bottom_right_x, f_bottom_right_y = floor.bottom_right
-            # f_top_right_x, f_top_right_y = floor.top_right
-            # f_bottom_left_x, f_bottom_left_y = floor.bottom_left
 
             top_left_x, top_left_y = self.top_left
             bottom_right_x, bottom_right_y = self.bottom_right
-            # top_right_x, top_right_y = self.top_right
-            # bottom_left_x, bottom_left_y = self.bottom_left
 
             f_y_vals = f_top_left_y, f_bottom_right_y
-            y_range = [min(*f_y_vals), max(*f_y_vals)]
             f_x_vals = f_top_left_x, f_bottom_right_x
+
             x_range = [min(*f_x_vals), max(*f_x_vals)]
+            y_range = [min(*f_y_vals), max(*f_y_vals)]
 
             x_colliding = False
             y_colliding = False
@@ -128,7 +125,6 @@ class Player(Sprite):
                 if check_in_range(y, *y_range):
                     y_colliding = True
 
-            print([top_left_x, bottom_right_x], f_x_vals)
             if x_colliding and y_colliding:
                 if self.direction[1] <= 0:
                     self.direction = Vector(self.direction[0], 0)
