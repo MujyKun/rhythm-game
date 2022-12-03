@@ -42,4 +42,4 @@ from .label import Label
 from .fpsscene import FPSScene
 from .note import Note
 from .song import Song
-
+from .background import Background

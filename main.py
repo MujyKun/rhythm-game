@@ -1,7 +1,7 @@
 import logging
 
 import ppb
-from models import Player, Label, FPSScene, Floor, Note, Song
+from models import Player, Label, FPSScene, Floor, Note, Song, Background
 
 RES = (1080, 720)
 
@@ -16,7 +16,7 @@ def setup(scene: ppb.Scene):
 
     test_song.play(scene, volume=0.1)
     sprites = [
-
+        Background(1280, 720),
         Floor(
             position=(0, -8), image_location="assets/floor.png", width=30),
         Player(
