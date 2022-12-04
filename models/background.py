@@ -25,11 +25,17 @@ class Background(RectangleSprite):
         self.res_height = res_height
         self.position = ppb.Vector(0, 0)
         self.image = ppb.Image(image_location)
+        self.layer = 0
 
     def on_update(self, event, signal):
         # Currently sets the scene's size as the camera's size. Has issue with layers.
         # Want to have this Sprite move with the camera, but currently affects layers.
         scene = event.scene
+        if not scene:
+            return
+
+        if not scene.main_camera:
+            return
         self.width = self.res_width / scene.main_camera.pixel_ratio
         self.height = self.res_height / scene.main_camera.pixel_ratio
 
