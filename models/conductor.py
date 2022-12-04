@@ -1,5 +1,6 @@
 import ppb
-from models import Song, Music
+from models import Song
+from ext import Music
 
 
 class Conductor(ppb.Sprite):

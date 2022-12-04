@@ -27,10 +27,14 @@ from sdl2.sdlmixer import (
     Mix_FreeMusic,
     Mix_GetMusicVolume,
     Mix_VolumeMusic,
+    Mix_PausedMusic,
+    Mix_ResumeMusic,
+    Mix_PauseMusic,
     # Channels https://www.libsdl.org/projects/SDL_mixer/docs/SDL_mixer_25.html#SEC25
     music_finished,
     Mix_HookMusicFinished,
     Mix_PlayMusic,
+    Mix_HaltMusic,
     # Other
     MIX_MAX_VOLUME,
     Mix_GetMusicPosition,
@@ -120,7 +124,7 @@ class Music(Sound):
 
 
 @music_finished
-def _filler_music_finished(music):
+def _filler_music_finished():
     pass
 
 
@@ -128,6 +132,9 @@ class MusicController(SoundController):
     """
     A controller for Music objects. To be added in the systems parameter of ppb.GameEngine.
     """
+    def __init__(self, **kwargs):
+        super(MusicController, self).__init__(**kwargs)
+        self._currently_playing = None
 
     def __enter__(self):
         super().__enter__()
@@ -150,7 +157,7 @@ class MusicController(SoundController):
         self.allocated_channels = 16
 
         # Register callback, keeping reference for later cleanup
-        self._finished_callback = music_finished(self._on_channel_finished)
+        self._finished_callback = music_finished(self._on_music_finished)
         mix_call(Mix_HookMusicFinished, self._finished_callback)
 
     def __exit__(self, *exc):
@@ -163,7 +170,6 @@ class MusicController(SoundController):
         super().__exit__(*exc)
 
     def on_play_music(self, event, signal):
-        faulthandler.enable()
         sound = event.music
         music = event.music.load()
         try:
@@ -173,4 +179,23 @@ class MusicController(SoundController):
         except SdlMixerError as e:
             raise
         else:
-            self._currently_playing[music_channel] = sound
+            self._currently_playing = sound
+
+    def on_stop_music(self, event, signal):
+        try:
+            music_channel = mix_call(
+                Mix_HaltMusic, _check_error=lambda rv: rv == -1
+            )
+        except SdlMixerError as e:
+            raise
+        else:
+            self._currently_playing = None
+
+    def on_pause_music(self, event, signal):
+        if mix_call(Mix_PausedMusic):
+            mix_call(Mix_ResumeMusic)
+        else:
+            mix_call(Mix_PauseMusic)
+
+    def _on_music_finished(self):
+        self._currently_playing = None

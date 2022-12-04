@@ -2,6 +2,7 @@ import logging
 
 import ppb
 from models import Player, Label, FPSScene, Floor, Note, Song, Background
+from ext import MusicController
 
 RES = (1080, 720)
 # RES = (2560, 1440)
@@ -45,4 +46,5 @@ if __name__ == "__main__":
         starting_scene=FPSScene,
         log_level=logging.INFO,
         resolution=RES,
+        systems=(MusicController,)
     )
