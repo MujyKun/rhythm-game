@@ -1,7 +1,7 @@
 import logging
 
 import ppb
-from models import Player, Label, FPSScene, Floor, Note, Song, Background
+from models import Player, Label, FPSScene, Floor, Note, Song, Background, Conductor
 from ext import MusicController
 
 RES = (1080, 720)
@@ -13,10 +13,10 @@ def setup(scene: ppb.Scene):
 
     # note = Note("a", 4)
     # scene.add(note)
+    c = Conductor(song_name="assets/testsong.json", music_name="legends.mp3")
+    #test_song = Song.load("assets/testsong.json")
 
-    test_song = Song.load("assets/testsong.json")
-
-    test_song.play(scene, volume=0.1)
+    #test_song.play(scene, volume=0.1)
     sprites = [
         Background(*RES, animate=True),
         Floor(
@@ -38,7 +38,7 @@ def setup(scene: ppb.Scene):
 
     for sprite in sprites:
         scene.add(sprite)
-
+    scene.add(c)
 
 if __name__ == "__main__":
     ppb.run(
