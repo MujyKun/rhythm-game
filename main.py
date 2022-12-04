@@ -1,23 +1,34 @@
 import logging
 
 import ppb
-from models import Player, Label, FPSScene, Tile
+from models import Player, Label, FPSScene, Floor, Note, Song, Background
 
 RES = (1080, 720)
+# RES = (2560, 1440)
 
 
 def setup(scene: ppb.Scene):
     scene.background_color = (255, 255, 255)
+
+    # note = Note("a", 4)
+    # scene.add(note)
+
+    test_song = Song.load("assets/testsong.json")
+
+    test_song.play(scene, volume=0.1)
     sprites = [
+        Background(1280, 720, animate=True),
+        Floor(
+            position=(0, -8), image_location="assets/floor.png", width=30, height=5.5),
         Player(
-            position=(5, 5),
+            position=(-8, -3),
             vertical_movement=False,
             horizontal_movement=True,
             jump_movement=True,
-            image_location="assets/ball.png",
+            zoom_camera=False,
+            scrollable_camera=True,
+            player_type="green"
         ),
-        Tile(
-            position=(5, -8), image_location="assets/tile.png"),
     ]
 
     for sprite in sprites:

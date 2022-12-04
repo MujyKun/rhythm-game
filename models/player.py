@@ -2,7 +2,8 @@ import ppb
 from ppb import keycodes, Sprite, Vector
 from ppb.camera import Camera
 from ppb.events import KeyPressed, KeyReleased, PlaySound
-from . import Tile
+from ppb.features.animation import Animation
+from . import Floor, check_in_range, is_colliding
 
 
 class Player(Sprite):
@@ -22,8 +23,9 @@ class Player(Sprite):
     jump_movement: bool
         If the player should be able to jump.
         Does not relate to vertical_movement.
-    image_location: str
-        The location of the image.
+    player_type: str
+        The player type. Can be found as a folder name in assets/player
+        Examples include: naked, green
     scrollable_camera: bool
         Whether the camera will scroll based on the player location.
     zoom_camera: bool
@@ -39,10 +41,10 @@ class Player(Sprite):
         A list of key codes that are currently being pressed.
     """
 
-    LEFT = keycodes.Left
-    RIGHT = keycodes.Right
-    UP = keycodes.Up
-    DOWN = keycodes.Down
+    LEFT = keycodes.A
+    RIGHT = keycodes.D
+    UP = keycodes.W
+    DOWN = keycodes.S
     JUMP = keycodes.Space
     ZOOM_IN = keycodes.Equals
     ZOOM_OUT = keycodes.Minus
@@ -51,15 +53,15 @@ class Player(Sprite):
     ZOOM_AMPLITUDE = 2
 
     def __init__(
-        self,
-        position: tuple = None,
-        direction: tuple = None,
-        horizontal_movement=False,
-        vertical_movement=False,
-        jump_movement=False,
-        scrollable_camera=True,
-        zoom_camera=True,
-        image_location="assets/default.png",
+            self,
+            position: tuple = None,
+            direction: tuple = None,
+            horizontal_movement=False,
+            vertical_movement=False,
+            jump_movement=False,
+            scrollable_camera=True,
+            zoom_camera=True,
+            player_type="naked",
     ):
         super(Player, self).__init__()
         position = position or (0, 0)
@@ -70,23 +72,43 @@ class Player(Sprite):
         self._horizontal_movement = horizontal_movement
         self._vertical_movement = vertical_movement
         self._jump_movement = jump_movement
-        self.image = ppb.Image(image_location)
+        # self.image = ppb.Image(image_location)
+        # self.image = Animation("assets/player/left_walk/{0..8}.png", 8)
+        self._folder_name = f"assets/player/{player_type}/"
+        self.image = None
+        self.stand_still()
         self.sound_playing = False
         self._zoom_camera = zoom_camera
         self._scrollable_camera = scrollable_camera
         self.scene = None
         self.pressed_keys = []
+        self._direction_walking = None
+        self.layer = 2
+
+    def walk_left(self):
+        """Make the animation walk left."""
+        self._direction_walking = self.LEFT
+        self.image = Animation(self._folder_name + "left_walk/{0..8}.png", 8)
+
+    def walk_right(self):
+        """Make the animation walk right."""
+        self._direction_walking = self.RIGHT
+        self.image = Animation(self._folder_name + "right_walk/{0..8}.png", 8)
+
+    def stand_still(self):
+        """Make the animation stand still."""
+        self._direction_walking = None
+        self.image = ppb.Image(self._folder_name + "stand_still/0.png")
 
     def on_update(self, event, signal):
         scene = self.scene = event.scene
-        for tile in scene.get(kind=Tile):
-
-            if (tile.position - self.position).length <= self.size:
-                # TODO: collision detection.
-                # event.scene.remove(self)
-                return
-
         self.direction += Vector(0, -self.GRAVITY) * event.time_delta
+
+        for floor in scene.get(kind=Floor):
+            if is_colliding(self, floor):
+                if self.direction[1] <= 0:
+                    self.direction = Vector(self.direction[0], 0)
+
         self.position += self.direction * self.speed * event.time_delta
 
         if self._scrollable_camera:
@@ -95,6 +117,17 @@ class Player(Sprite):
 
         # handle keys that are currently being held down.
         [self.on_key_held(key) for key in self.pressed_keys]
+        self._handle_animation()
+
+    def _handle_animation(self):
+        """Handle the animations for walking based on the velocity."""
+        horizontal_movement = self.direction[0]
+        if horizontal_movement < 0 and self._direction_walking != self.LEFT:
+            self.walk_left()
+        elif horizontal_movement > 0 and self._direction_walking != self.RIGHT:
+            self.walk_right()
+        elif horizontal_movement == 0 and self._direction_walking:
+            self.stand_still()
 
     def _adjust_camera(self, camera: Camera):
         """Adjust the camera to keep the player in a scrolling view."""
@@ -145,7 +178,10 @@ class Player(Sprite):
 
     def _control_camera_movement(self, key):
         """Control the camera movement decided by the player."""
-        if not self._zoom_camera and self.scene and self.scene.main_camera:
+        if not self._zoom_camera and self.scene:
+            return
+
+        if not self.scene.main_camera:
             return
 
         camera: Camera = self.scene.main_camera
