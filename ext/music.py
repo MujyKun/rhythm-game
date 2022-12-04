@@ -1,10 +1,9 @@
 import ctypes
-import faulthandler
 import time
 import logging
 from ppb import Sound
-from ppb.systems import SoundController
-from ppb.systems.sdl_utils import mix_call, SdlMixerError
+from ppb.systems.sdl_utils import SdlSubSystem, mix_call, SdlMixerError
+from ppb.utils import LoggingMixin
 from sdl2 import (
     AUDIO_S16SYS,
 )
@@ -128,7 +127,7 @@ def _filler_music_finished():
     pass
 
 
-class MusicController(SoundController):
+class MusicController(SdlSubSystem, LoggingMixin):
     """
     A controller for Music objects. To be added in the systems parameter of ppb.GameEngine.
     """
