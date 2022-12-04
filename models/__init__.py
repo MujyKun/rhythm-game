@@ -36,6 +36,7 @@ def is_colliding(first_sprite, second_sprite) -> bool:
     return x_colliding and y_colliding
 
 
+from .music import Music, MusicController
 from .floor import Floor
 from .player import Player
 from .label import Label

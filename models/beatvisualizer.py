@@ -33,11 +33,15 @@ class BeatVisualizer(object):
 
         # Initialize the middle target box
         image = image or ppb.Square(200, 200, 100)
+
         self.target_box = Sprite(size=size, position=position, image=image)
+        self.target_box.rotate(45)
+        self.target_box.layer = 2
 
         # Initialize the triggers
         self.left_triggers = []
         self.right_triggers = []
+
         for i in range(0, 5):
             self.left_triggers.append(BeatTrigger(width=0.25, height=0.5,
                                                   position=(
@@ -104,7 +108,9 @@ class BeatTrigger(RectangleSprite):
         self.position = Vector(*position)
         self.direction = Vector(*direction)
         # The starting position is the 10 out going in the opposite direction
-        self.start_pos = Vector(10, 0) * self.direction.x * -1
+        self._start_pos_x = 10 * self.direction.x * -1
+        self._start_pos_y = self.position.y
+        self.start_pos = Vector(self._start_pos_x, self._start_pos_y)
         # Calculating how fast the triggers should go to stay within beat.
         # Because this using seconds instead of time, it will go out of sync if
         # frame rate is not constant.
@@ -118,6 +124,7 @@ class BeatTrigger(RectangleSprite):
         self.position += self.direction * self.speed * update_event.time_delta
         for t in update_event.scene.get(kind=BeatTrigger):
             if (t.position - self.position).length <= self.width and t != self:
+                signal(ppb.events.PlaySound(ppb.Sound("assets/beat_1.wav")))
                 t.reset()
                 self.reset()
 
