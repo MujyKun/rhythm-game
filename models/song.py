@@ -36,29 +36,22 @@ class Song:
         self.tiles: List[Note] = tiles or []
         self._spread = spread
         self.scene = scene
-        self.columns = [-12, -6, 6, 12]  # the x positions of the columns.
         self.arrange_tiles()
-        # self.create_beat_zones()
-
-    def create_beat_zones(self):
-        circle = ppb.Circle(255, 255, 255)
-        sprite = ppb.RectangleSprite(width=1, height=1, image=circle, position=(0, 0))
-        sprite.layer = 4
-        # self.scene.add(sprite)
 
     def arrange_tiles(self):
         """Arrange the tiles into columns."""
-        beats_occupied = {}
-        for tile in self.tiles:
-            while True:
-                random_column = randint(0, len(self.columns))
-                beats_occupied.get(random_column)
-                if beats_occupied and beats_occupied.get(tile.play_at):
-                    continue
-
-                beats_occupied[random_column] = {tile.play_at: True}
-                tile.position = ppb.Vector(random_column, tile.position.y)
-                break
+        # beats_occupied = {}
+        # for tile in self.tiles:
+        #     while True:
+        #         random_column = randint(0, len(self.columns))
+        #         beats_occupied.get(random_column)
+        #         if beats_occupied and beats_occupied.get(tile.play_at):
+        #             continue
+        #
+        #         beats_occupied[random_column] = {tile.play_at: True}
+        #         tile.position = ppb.Vector(random_column, tile.position.y)
+        #         break
+        ...
 
     @staticmethod
     def load(file_location, scene, spread=False):
