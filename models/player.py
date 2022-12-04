@@ -89,7 +89,7 @@ class Player(Sprite):
         self.pressed_keys = []
         self._direction_walking = None
         self._move_outside_camera = move_outside_camera
-        self.layer = 2
+        self.layer = 3
 
     @property
     def camera(self) -> Optional[Camera]:
