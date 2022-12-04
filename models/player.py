@@ -1,9 +1,11 @@
+from typing import Optional
+
 import ppb
 from ppb import keycodes, Sprite, Vector
 from ppb.camera import Camera
 from ppb.events import KeyPressed, KeyReleased, PlaySound
 from ppb.features.animation import Animation
-from . import Floor, check_in_range, is_colliding
+from . import Floor, is_colliding
 
 
 class Player(Sprite):
@@ -30,6 +32,8 @@ class Player(Sprite):
         Whether the camera will scroll based on the player location.
     zoom_camera: bool
         Whether the camera can be zoomed in/out by the player.
+    move_outside_camera: bool
+        Whether the player is able to move outside of the camera.
 
     Attributes
     ----------
@@ -62,6 +66,7 @@ class Player(Sprite):
             scrollable_camera=True,
             zoom_camera=True,
             player_type="naked",
+            move_outside_camera=True
     ):
         super(Player, self).__init__()
         position = position or (0, 0)
@@ -83,7 +88,20 @@ class Player(Sprite):
         self.scene = None
         self.pressed_keys = []
         self._direction_walking = None
+        self._move_outside_camera = move_outside_camera
         self.layer = 2
+
+    @property
+    def camera(self) -> Optional[Camera]:
+        """Get the scene camera."""
+        if not self.scene:
+            return
+
+        if not self.scene.main_camera:
+            return
+
+        camera: Camera = self.scene.main_camera
+        return camera
 
     def walk_left(self):
         """Make the animation walk left."""
@@ -111,13 +129,38 @@ class Player(Sprite):
 
         self.position += self.direction * self.speed * event.time_delta
 
+        if not self._move_outside_camera:
+            self._check_wall_boundaries()
+
         if self._scrollable_camera:
             # update our camera location
-            self._adjust_camera(scene.main_camera)
+            self._adjust_camera()
 
         # handle keys that are currently being held down.
         [self.on_key_held(key) for key in self.pressed_keys]
         self._handle_animation()
+
+    def _check_wall_boundaries(self):
+        """Move the player within camera range if they move outside of the camera range."""
+        if not self.camera:
+            return
+
+        if self.camera.sprite_in_view(self):
+            return
+
+        dx, dy = self.direction
+
+        if self.position.x > self.camera.right and dx > 0:  # right wall
+            self.position = Vector(self.camera.right, self.position.y)
+        if self.position.x < self.camera.left and dx < 0:  # left wall
+            self.position = Vector(self.camera.left, self.position.y)
+
+
+        if self.position.y > self.camera.top and dy > 0:  # top wall
+            self.position = Vector(self.position.x, self.camera.top)
+        if self.position.y < self.camera.bottom and dy < 0:  # bottom wall
+            self.position = Vector(self.position.x, self.camera.bottom)
+
 
     def _handle_animation(self):
         """Handle the animations for walking based on the velocity."""
@@ -129,20 +172,20 @@ class Player(Sprite):
         elif horizontal_movement == 0 and self._direction_walking:
             self.stand_still()
 
-    def _adjust_camera(self, camera: Camera):
+    def _adjust_camera(self):
         """Adjust the camera to keep the player in a scrolling view."""
-        if not camera or camera.sprite_in_view(self):
+        if not self.camera or self.camera.sprite_in_view(self):
             return
 
-        if self.right > camera.right:
-            camera.left = self.right
-        elif self.left < camera.left:
-            camera.right = self.left
+        if self.right > self.camera.right:
+            self.camera.left = self.right
+        elif self.left < self.camera.left:
+            self.camera.right = self.left
 
-        if self.top > camera.top:
-            camera.bottom = self.top
-        elif self.bottom < camera.bottom:
-            camera.top = self.bottom
+        if self.top > self.camera.top:
+            self.camera.bottom = self.top
+        elif self.bottom < self.camera.bottom:
+            self.camera.top = self.bottom
 
     def _control_movement(self, key_event, reverse_motion=False):
         """Control the player movement."""
@@ -178,19 +221,18 @@ class Player(Sprite):
 
     def _control_camera_movement(self, key):
         """Control the camera movement decided by the player."""
-        if not self._zoom_camera and self.scene:
+        if not self._zoom_camera:
             return
 
-        if not self.scene.main_camera:
+        if not self.camera:
             return
 
-        camera: Camera = self.scene.main_camera
         if key == self.ZOOM_IN:
-            camera.height -= self.ZOOM_AMPLITUDE
-            camera.width -= self.ZOOM_AMPLITUDE
+            self.camera.height -= self.ZOOM_AMPLITUDE
+            self.camera.width -= self.ZOOM_AMPLITUDE
         elif key == self.ZOOM_OUT:
-            camera.height += self.ZOOM_AMPLITUDE
-            camera.width += self.ZOOM_AMPLITUDE
+            self.camera.height += self.ZOOM_AMPLITUDE
+            self.camera.width += self.ZOOM_AMPLITUDE
 
     def on_key_pressed(self, key_event: KeyPressed, signal):
         """When a key is pressed."""

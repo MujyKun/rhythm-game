@@ -34,6 +34,14 @@ class Background(RectangleSprite):
             self.unanimate()
         self.layer = 0
 
+    @staticmethod
+    def get_moon():
+        """Create a moon object."""
+        circle = ppb.Circle(255, 255, 255)
+        sprite = ppb.RectangleSprite(width=1, height=1, image=circle, position=(0, 0))
+        sprite.layer = 1
+        return sprite
+
     def animate(self):
         """Animate the background."""
         self.image = Animation("assets/background/{0..7}.png", 7)
