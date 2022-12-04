@@ -4,6 +4,7 @@ import ppb
 from models import Player, Label, FPSScene, Floor, Note, Song, Background
 
 RES = (1080, 720)
+# RES = (2560, 1440)
 
 
 def setup(scene: ppb.Scene):
@@ -16,14 +17,16 @@ def setup(scene: ppb.Scene):
 
     test_song.play(scene, volume=0.1)
     sprites = [
-        Background(1280, 720),
+        Background(1280, 720, animate=True),
         Floor(
-            position=(0, -8), image_location="assets/floor.png", width=30),
+            position=(0, -8), image_location="assets/floor.png", width=30, height=5.5),
         Player(
-            position=(5, 5),
+            position=(-8, -3),
             vertical_movement=False,
             horizontal_movement=True,
             jump_movement=True,
+            zoom_camera=False,
+            scrollable_camera=True,
             player_type="green"
         ),
     ]

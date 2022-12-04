@@ -1,5 +1,6 @@
 import ppb
 from ppb import RectangleSprite
+from ppb.features.animation import Animation
 
 
 class Background(RectangleSprite):
@@ -13,19 +14,33 @@ class Background(RectangleSprite):
     res_height: int
         The height in pixels of the background image
     image_location: str
-        The path of the image to be used as the background.   
+        The path of the image to be used as the background.
+    animate: bool
+        Whether to animate the background.
     """
     def __init__(self,
                  res_width=1080,
                  res_height=720,
-                 image_location="assets/background.png",
-                 **kwargs):
+                 image_location="assets/background/background.png", animate=True, **kwargs):
         super(Background, self).__init__(**kwargs)
         self.res_width = res_width
         self.res_height = res_height
         self.position = ppb.Vector(0, 0)
-        self.image = ppb.Image(image_location)
+        self.image_location = image_location
+        self.image = None
+        if animate:
+            self.animate()
+        else:
+            self.unanimate()
         self.layer = 0
+
+    def animate(self):
+        """Animate the background."""
+        self.image = Animation("assets/background/{0..7}.png", 7)
+
+    def unanimate(self):
+        """Un-animate the background."""
+        self.image = ppb.Image(self.image_location)
 
     def on_update(self, event, signal):
         # Currently sets the scene's size as the camera's size. Has issue with layers.

@@ -9,6 +9,7 @@ class Label(Sprite):
         self._text = text
         self._font = Font(font_location, size=size)
         self.image = Text(text, font=self._font)
+        self.layer = 10
 
     def update_text(self, text):
         self._text = text

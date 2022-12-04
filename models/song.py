@@ -76,7 +76,9 @@ class Song:
 
     def play(self, scene, volume=0.1):
         """Play the song (game) in the scene."""
+        last_position = ppb.Vector(-5, -5)
         for tile in self.tiles:
             scene.add(tile)
-            tile.start(tile.position, speed=1)
+            tile.start(last_position, speed=1)
+            last_position += ppb.Vector(3, 3)
             tile.sound_to_play.sound.volume = volume
