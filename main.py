@@ -13,9 +13,9 @@ def setup(scene: ppb.Scene):
     # note = Note("a", 4)
     # scene.add(note)
 
-    test_song = Song.load("assets/testsong.json", scene=scene)
+    test_song = Song.load("assets/testsong.json")
 
-    test_song.play(volume=0.1)
+    test_song.play(scene, volume=0.1)
     sprites = [
         Background(*RES, animate=True),
         Floor(
