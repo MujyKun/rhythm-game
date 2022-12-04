@@ -19,7 +19,8 @@ def setup(scene: ppb.Scene):
     sprites = [
         Background(*RES, animate=True),
         Floor(
-            position=(0, -8), image_location="assets/floor.png", width=30, height=5.5),
+            position=(0, -8), image_location="assets/floor.png", width=30, height=5.5
+        ),
         Player(
             position=(-8, -3),
             vertical_movement=False,
@@ -28,9 +29,9 @@ def setup(scene: ppb.Scene):
             zoom_camera=False,
             scrollable_camera=True,
             player_type="green",
-            move_outside_camera=False
+            move_outside_camera=False,
         ),
-        Background.get_moon()
+        Background.get_moon(),
     ]
 
     for sprite in sprites:

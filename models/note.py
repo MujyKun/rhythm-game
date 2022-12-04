@@ -23,13 +23,14 @@ class Note(RectangleSprite):
     play_at: int
         The beat the note will play at.
     """
+
     def __init__(self, note_type: str, play_at: int):
         super().__init__()
         # Set up img as another variable and image to None
         # so that we can "trick" the render not to render this Sprite.
-        self._img = Image(f'/assets/tiles/{note_type}.png')
+        self._img = Image(f"/assets/tiles/{note_type}.png")
         self.image = None
-        self.sound = Sound(f'/assets/piano-{note_type}.wav')
+        self.sound = Sound(f"/assets/piano-{note_type}.wav")
         self.scene = None
         self.position = ppb.Vector(0, 0)
         self.direction = ppb.Vector(0, -1)

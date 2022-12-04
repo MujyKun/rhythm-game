@@ -30,6 +30,7 @@ class Song:
     tiles: List[:ref:`Note`]
         A list of note (tile) objects.
     """
+
     def __init__(self, name: str, tiles, scene, spread=False):
         self.name: str = name
         self.tiles: List[Note] = tiles or []
@@ -44,7 +45,6 @@ class Song:
         sprite = ppb.RectangleSprite(width=1, height=1, image=circle, position=(0, 0))
         sprite.layer = 4
         # self.scene.add(sprite)
-
 
     def arrange_tiles(self):
         """Arrange the tiles into columns."""
@@ -78,7 +78,7 @@ class Song:
         with open(file_location) as f:
             song = json.load(f)
 
-        song = song['song']
+        song = song["song"]
         all_notes = song.get("tiles")
         tiles = []
         for beat_number, notes_to_play in all_notes.items():

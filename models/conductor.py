@@ -1,5 +1,5 @@
 import ppb
-from models import Song
+from models import Song, Music
 
 
 class Conductor(ppb.Sprite):
@@ -13,6 +13,7 @@ class Conductor(ppb.Sprite):
     ----------
 
     """
+
     def __init__(self, song_name):
         super(Conductor, self).__init__()
         self.image = None
@@ -29,9 +30,3 @@ class Conductor(ppb.Sprite):
 
     def play(self, scene):
         self.song.play(scene=scene)
-
-
-if __name__ == "__main__":
-    c = Conductor(bpm=5, music_location='assets/piano-g.wav')
-    c.load_song(song_name='song')
-

@@ -14,7 +14,7 @@ class BeatVisualizer(object):
         The size of the middle target that the triggers are moving towards.
     position: tuple
         The position of the middle target.
-    image: AbstractAssest
+    image: AbstractAsset
         The image of the middle target.
     trigger_image: AbstractAsset
         The image of the triggers.
@@ -26,8 +26,14 @@ class BeatVisualizer(object):
         The position of the middle target.
     """
 
-    def __init__(self, size: int = 1, position: tuple = None, image: AbstractAsset = None,
-                 trigger_image: AbstractAsset = None, bpm: int = 100):
+    def __init__(
+        self,
+        size: int = 1,
+        position: tuple = None,
+        image: AbstractAsset = None,
+        trigger_image: AbstractAsset = None,
+        bpm: int = 100,
+    ):
         position = position or (0, 0)
         self.bpm = bpm
 
@@ -43,16 +49,34 @@ class BeatVisualizer(object):
         self.right_triggers = []
 
         for i in range(0, 5):
-            self.left_triggers.append(BeatTrigger(width=0.25, height=0.5,
-                                                  position=(
-                                                  self.target_box.position.x - 10 + i * 2, self.target_box.position.y),
-                                                  direction=(1, 0), image=trigger_image,
-                                                  layer=self.target_box.layer + 1, bpm=self.bpm))
-            self.right_triggers.append(BeatTrigger(width=0.25, height=0.5,
-                                                   position=(
-                                                   self.target_box.position.x + 10 - i * 2, self.target_box.position.y),
-                                                   direction=(-1, 0), image=trigger_image,
-                                                   layer=self.target_box.layer + 1, bpm=self.bpm))
+            self.left_triggers.append(
+                BeatTrigger(
+                    width=0.25,
+                    height=0.5,
+                    position=(
+                        self.target_box.position.x - 10 + i * 2,
+                        self.target_box.position.y,
+                    ),
+                    direction=(1, 0),
+                    image=trigger_image,
+                    layer=self.target_box.layer + 1,
+                    bpm=self.bpm,
+                )
+            )
+            self.right_triggers.append(
+                BeatTrigger(
+                    width=0.25,
+                    height=0.5,
+                    position=(
+                        self.target_box.position.x + 10 - i * 2,
+                        self.target_box.position.y,
+                    ),
+                    direction=(-1, 0),
+                    image=trigger_image,
+                    layer=self.target_box.layer + 1,
+                    bpm=self.bpm,
+                )
+            )
 
     def setup(self, scene):
         scene.add(self.target_box)
@@ -97,9 +121,16 @@ class BeatTrigger(RectangleSprite):
         The image of the trigger to be drawn.
     """
 
-    def __init__(self, width: float = None, height: float = None,
-                 position: tuple = None, direction: tuple = None,
-                 image: AbstractAsset = None, layer=0, bpm=150):
+    def __init__(
+        self,
+        width: float = None,
+        height: float = None,
+        position: tuple = None,
+        direction: tuple = None,
+        image: AbstractAsset = None,
+        layer=0,
+        bpm=150,
+    ):
         super(BeatTrigger, self).__init__()
         position = position or (0, 0)
         direction = direction or (0, 0)

@@ -12,15 +12,28 @@ from sdl2.sdlmixer import (
     # Errors, https://www.libsdl.org/projects/SDL_mixer/docs/SDL_mixer_7.html#SEC7
     Mix_GetError,
     # Support library loading https://www.libsdl.org/projects/SDL_mixer/docs/SDL_mixer_7.html#SEC7
-    Mix_Init, Mix_Quit, MIX_INIT_FLAC, MIX_INIT_MOD, MIX_INIT_MP3, MIX_INIT_OGG,
+    Mix_Init,
+    Mix_Quit,
+    MIX_INIT_FLAC,
+    MIX_INIT_MOD,
+    MIX_INIT_MP3,
+    MIX_INIT_OGG,
     # Mixer init https://www.libsdl.org/projects/SDL_mixer/docs/SDL_mixer_7.html#SEC7
-    Mix_OpenAudio, Mix_CloseAudio, Mix_QuerySpec,
+    Mix_OpenAudio,
+    Mix_CloseAudio,
+    Mix_QuerySpec,
     # Samples https://www.libsdl.org/projects/SDL_mixer/docs/SDL_mixer_16.html#SEC16
-    Mix_LoadMUS, Mix_FreeMusic, Mix_GetMusicVolume, Mix_VolumeMusic,
+    Mix_LoadMUS,
+    Mix_FreeMusic,
+    Mix_GetMusicVolume,
+    Mix_VolumeMusic,
     # Channels https://www.libsdl.org/projects/SDL_mixer/docs/SDL_mixer_25.html#SEC25
-    music_finished, Mix_HookMusicFinished, Mix_PlayMusic,
+    music_finished,
+    Mix_HookMusicFinished,
+    Mix_PlayMusic,
     # Other
-    MIX_MAX_VOLUME, Mix_GetMusicPosition
+    MIX_MAX_VOLUME,
+    Mix_GetMusicPosition,
 )
 
 logger = logging.getLogger(__name__)
@@ -67,8 +80,10 @@ class Music(Sound):
             # Try to open the file to see if it exists
             file = open(self.name)
         except FileNotFoundError:
-            if hasattr(self, 'file_missing'):
-                logger.warning("File not found: %r. %s", self.name, self.not_found_message)
+            if hasattr(self, "file_missing"):
+                logger.warning(
+                    "File not found: %r. %s", self.name, self.not_found_message
+                )
                 return self.file_missing()
             else:
                 raise
@@ -81,11 +96,8 @@ class Music(Sound):
         while not any(query_spec()):
             time.sleep(0)
         # Convert str to bytes as this is expected for sdl2
-        byte_name = bytes(name, encoding='utf-8')
-        return mix_call(
-            Mix_LoadMUS, byte_name,
-            _check_error=lambda rv: not rv
-        )
+        byte_name = bytes(name, encoding="utf-8")
+        return mix_call(Mix_LoadMUS, byte_name, _check_error=lambda rv: not rv)
 
     def free(self, object, _Mix_FreeMusic=Mix_FreeMusic):
         if object:
@@ -128,7 +140,7 @@ class MusicController(SoundController):
             # ^^^^ Smaller is more CPU, larger is less responsive.
             # A lot of the performance-related recommendations are so dated I'm
             # not sure how much difference it makes.
-            _check_error=lambda rv: rv == -1
+            _check_error=lambda rv: rv == -1,
         )
         mix_call(Mix_Init, MIX_INIT_FLAC | MIX_INIT_MOD | MIX_INIT_MP3 | MIX_INIT_OGG)
 
@@ -156,10 +168,7 @@ class MusicController(SoundController):
         music = event.music.load()
         try:
             music_channel = mix_call(
-                Mix_PlayMusic,
-                music,
-                0,
-                _check_error=lambda rv: rv == -1
+                Mix_PlayMusic, music, 0, _check_error=lambda rv: rv == -1
             )
         except SdlMixerError as e:
             raise

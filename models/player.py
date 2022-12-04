@@ -57,16 +57,16 @@ class Player(Sprite):
     ZOOM_AMPLITUDE = 2
 
     def __init__(
-            self,
-            position: tuple = None,
-            direction: tuple = None,
-            horizontal_movement=False,
-            vertical_movement=False,
-            jump_movement=False,
-            scrollable_camera=True,
-            zoom_camera=True,
-            player_type="naked",
-            move_outside_camera=True
+        self,
+        position: tuple = None,
+        direction: tuple = None,
+        horizontal_movement=False,
+        vertical_movement=False,
+        jump_movement=False,
+        scrollable_camera=True,
+        zoom_camera=True,
+        player_type="naked",
+        move_outside_camera=True,
     ):
         super(Player, self).__init__()
         position = position or (0, 0)
@@ -155,12 +155,10 @@ class Player(Sprite):
         if self.position.x < self.camera.left and dx < 0:  # left wall
             self.position = Vector(self.camera.left, self.position.y)
 
-
         if self.position.y > self.camera.top and dy > 0:  # top wall
             self.position = Vector(self.position.x, self.camera.top)
         if self.position.y < self.camera.bottom and dy < 0:  # bottom wall
             self.position = Vector(self.position.x, self.camera.bottom)
-
 
     def _handle_animation(self):
         """Handle the animations for walking based on the velocity."""
