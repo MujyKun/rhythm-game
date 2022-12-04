@@ -4,20 +4,20 @@ from ppb.sprites import RectangleSprite, RectangleShapeMixin
 from ppb.events import KeyPressed, KeyReleased, PlaySound
 
 
-class Tile(RectangleSprite):
+class Floor(RectangleSprite):
     """
-    A Tile sprite. Represents a tile.
+    A Floor sprite. Represents a Floor.
 
     Parameters
     ----------
     position: tuple
-        The position the tile should start at.
+        The position the floor should start at.
     image_location: str
         The location of the image.
     height: int
-        Height of the tile.
+        Height of the floor.
     width: int
-        Width of the tile.
+        Width of the floor.
     """
 
     def __init__(
@@ -28,10 +28,11 @@ class Tile(RectangleSprite):
         image_location="assets/default.png",
         **kwargs
     ):
-        super(Tile, self).__init__(**kwargs)
+        super(Floor, self).__init__(**kwargs)
         if width:
             self.width = width
         if height:
             self.height = height
         self.position = Vector(*position)
         self.image = ppb.Image(image_location)
+        self.layer = 1
