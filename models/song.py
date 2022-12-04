@@ -31,7 +31,7 @@ class Song:
         A list of note (tile) objects.
     """
 
-    def __init__(self, name: str, tiles, spread=False):
+    def __init__(self, name: str, tiles=None, spread=False):
         self.name: str = name
         self.tiles: List[Note] = tiles or []
         self._spread = spread
