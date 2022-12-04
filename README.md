@@ -75,15 +75,15 @@ A rhythm game created for the CSCI-437 final project.
 
 
 
-## A few Example GIFs
+## Example GIFs
 
 ### Different Player Types
 ![Different Players](example_gifs/different_players.gif)
 
-### Earth Gravity
+### "Earth" Gravity
 ![Earth Gravity](example_gifs/earth_gravity.gif)
 
-### Moon Gravity
+### "Moon" Gravity
 ![Moon Gravity](example_gifs/moon_gravity.gif)
 
 ### Player Locked to Camera

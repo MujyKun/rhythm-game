@@ -84,6 +84,10 @@ class Player(Sprite):
         # self.image = ppb.Image(image_location)
         # self.image = Animation("assets/player/left_walk/{0..8}.png", 8)
         self._folder_name = f"assets/player/{player_type}/"
+        self._left_walk_animation = Animation(self._folder_name + "left_walk/{0..8}.png", 8)
+        self._right_walk_animation = Animation(self._folder_name + "right_walk/{0..8}.png", 8)
+        self._stand_image = ppb.Image(self._folder_name + "stand_still/0.png")
+
         self.image = None
         self.stand_still()
         self.sound_playing = False
@@ -111,17 +115,17 @@ class Player(Sprite):
     def walk_left(self):
         """Make the animation walk left."""
         self._direction_walking = self.LEFT
-        self.image = Animation(self._folder_name + "left_walk/{0..8}.png", 8)
+        self.image = self._left_walk_animation
 
     def walk_right(self):
         """Make the animation walk right."""
         self._direction_walking = self.RIGHT
-        self.image = Animation(self._folder_name + "right_walk/{0..8}.png", 8)
+        self.image = self._right_walk_animation
 
     def stand_still(self):
         """Make the animation stand still."""
         self._direction_walking = None
-        self.image = ppb.Image(self._folder_name + "stand_still/0.png")
+        self.image = self._stand_image
 
     def on_update(self, event, signal):
         scene = self.scene = event.scene
