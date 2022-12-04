@@ -48,10 +48,12 @@ class FPSScene(Scene):
         if not self._fps_placement:
             return
 
-        self._mouse_placement = self._fps_placement[0] + 0.3, self._fps_placement[1] - 0.8
-        self._mouse_pos_label = Label(f"({mouse_motion.position[0]:.2f}, {mouse_motion.position[1]:.2f})", size=50)
+        self._mouse_placement = (
+            self._fps_placement[0] + 0.3,
+            self._fps_placement[1] - 0.8,
+        )
+        self._mouse_pos_label = Label(
+            f"({mouse_motion.position[0]:.2f}, {mouse_motion.position[1]:.2f})", size=50
+        )
         self._mouse_pos_label.position = ppb.Vector(self._mouse_placement)
         self.add(self._mouse_pos_label)
-
-
-

@@ -18,10 +18,15 @@ class Background(RectangleSprite):
     animate: bool
         Whether to animate the background.
     """
-    def __init__(self,
-                 res_width=1080,
-                 res_height=720,
-                 image_location="assets/background/background.png", animate=True, **kwargs):
+
+    def __init__(
+        self,
+        res_width=1080,
+        res_height=720,
+        image_location="assets/background/background.png",
+        animate=True,
+        **kwargs
+    ):
         super(Background, self).__init__(**kwargs)
         self.res_width = res_width
         self.res_height = res_height
@@ -61,4 +66,3 @@ class Background(RectangleSprite):
             return
         self.width = self.res_width / scene.main_camera.pixel_ratio
         self.height = self.res_height / scene.main_camera.pixel_ratio
-
