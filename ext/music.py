@@ -134,7 +134,7 @@ class MusicController(SoundController):
     """
     def __init__(self, **kwargs):
         super(MusicController, self).__init__(**kwargs)
-        self._currently_playing = None
+        self._current_music_playing = None
 
     def __enter__(self):
         super().__enter__()
@@ -179,7 +179,7 @@ class MusicController(SoundController):
         except SdlMixerError as e:
             raise
         else:
-            self._currently_playing = sound
+            self._current_music_playing = sound
 
     def on_stop_music(self, event, signal):
         try:
@@ -189,7 +189,7 @@ class MusicController(SoundController):
         except SdlMixerError as e:
             raise
         else:
-            self._currently_playing = None
+            self._current_music_playing = None
 
     def on_pause_music(self, event, signal):
         if mix_call(Mix_PausedMusic):
@@ -198,4 +198,4 @@ class MusicController(SoundController):
             mix_call(Mix_PauseMusic)
 
     def _on_music_finished(self):
-        self._currently_playing = None
+        self._current_music_playing = None
