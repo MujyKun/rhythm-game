@@ -41,6 +41,7 @@ class FPSScene(Scene):
         self.add(self._frame_label)
 
     def on_mouse_motion(self, mouse_motion: ppb.events.MouseMotion, signal):
+        """Updates on mouse movement."""
         if self._mouse_pos_label:
             self.remove(self._mouse_pos_label)
 
