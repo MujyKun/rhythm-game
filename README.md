@@ -72,4 +72,33 @@ A rhythm game created for the CSCI-437 final project.
      - Cursor Position follows the camera and is pinned to the top left (Below the FPS Counter).
    - Layering
      - Layering has been implemented into sprites so that sprites on top are consistent.
-   - 
+
+
+
+## A few Example GIFs
+
+### Different Player Types
+![Different Players](example_gifs/different_players.gif)
+
+### Earth Gravity
+![Earth Gravity](example_gifs/earth_gravity.gif)
+
+### Moon Gravity
+![Moon Gravity](example_gifs/moon_gravity.gif)
+
+### Player Locked to Camera
+![Player Camera Locked](example_gifs/locked_to_camera.gif)
+
+### Camera Following Player
+![Camera Following Player](example_gifs/scrollable_camera.gif)
+
+### Camera Not Following Player
+![Camera Not Following Player](example_gifs/nonscrollable_camera.gif)
+
+### Several Jumps
+![Several Jumps](example_gifs/several_jumps.gif)
+
+
+
+
+    
