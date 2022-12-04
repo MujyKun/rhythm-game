@@ -34,6 +34,8 @@ class Player(Sprite):
         Whether the camera can be zoomed in/out by the player.
     move_outside_camera: bool
         Whether the player is able to move outside of the camera.
+    several_jumps: bool
+        Whether the player can jump several times at once.
 
     Attributes
     ----------
@@ -52,7 +54,8 @@ class Player(Sprite):
     JUMP = keycodes.Space
     ZOOM_IN = keycodes.Equals
     ZOOM_OUT = keycodes.Minus
-    GRAVITY = 0.8
+    # GRAVITY = 0.8 # Moon Gravity
+    GRAVITY = 1.8  # Earth Gravity
     MOVEMENT_AMPLITUDE = 1
     ZOOM_AMPLITUDE = 2
 
@@ -67,6 +70,7 @@ class Player(Sprite):
         zoom_camera=True,
         player_type="naked",
         move_outside_camera=True,
+        several_jumps=False,
     ):
         super(Player, self).__init__()
         position = position or (0, 0)
@@ -89,6 +93,7 @@ class Player(Sprite):
         self.pressed_keys = []
         self._direction_walking = None
         self._move_outside_camera = move_outside_camera
+        self._several_jumps = several_jumps
         self.layer = 3
 
     @property
@@ -215,7 +220,16 @@ class Player(Sprite):
                 )
         if self._jump_movement:
             if key_event.key == self.JUMP and not reverse_motion:
-                self.direction += Vector(0, self.MOVEMENT_AMPLITUDE)
+                jump_vec = Vector(0, self.MOVEMENT_AMPLITUDE)
+                if self._several_jumps:
+                    self.direction += jump_vec
+                else:
+                    touching_floor = False
+                    for floor in self.scene.get(kind=Floor):
+                        if is_colliding(self, floor):
+                            touching_floor = True
+                    if touching_floor:
+                        self.direction += jump_vec
 
     def _control_camera_movement(self, key):
         """Control the camera movement decided by the player."""

@@ -12,8 +12,9 @@ A rhythm game created for the CSCI-437 final project.
 5) Start the program with `python main.py`  
 
 
-## Optional Features
-   - Frames Per Second (By default limited to 30 FPS)
+## General/Optional Features
+   - Frames Per Second (By default capped to 30 FPS)
+     - FPS Counter follows camera and is pinned to the top left.
    - Expandable Canvas
      - Can go outside base resolution.
      - Dynamic Resolution 
@@ -28,7 +29,11 @@ A rhythm game created for the CSCI-437 final project.
      - Set Vertical Movement (Keys defaulted to `W` & `S`)
      - Set Horizontal Movement (Keys defaulted to `A` & `D`)
      - Set Jump Movement (Key defaulted to `Spacebar`)
+       - Optional Implementation to allow several jumps at a time. 
+       - Currently set to only allow jumping while on a floor.
      - Camera Restrictions - Can choose whether the player can move outside the camera range.
+     - Gravity (This has only been implemented for the player)
+       - Implementations for both Moon and Earth gravity.
    - Background
      - Can be animated or an individual image.
      - Animated backgrounds should go [here](assets/background)
@@ -54,6 +59,17 @@ A rhythm game created for the CSCI-437 final project.
         }
        }
        ```
-        - The name is song name.
+        - The name is the song name.
         - The tile key consists of the beat number.
         - The tile value consists of the notes played at that specific beat.
+        - The limit to the number of notes played on a single beat is dependent on:
+          - The number of audio channels present.
+          - The number of columns available in the game.
+   - Holding Keys
+     - Keys not released are stored in a list for continuous execution. 
+     - Implemented more specifically for camera zooming.
+   - Cursor Movement
+     - Cursor Position follows the camera and is pinned to the top left (Below the FPS Counter).
+   - Layering
+     - Layering has been implemented into sprites so that sprites on top are consistent.
+   - 
