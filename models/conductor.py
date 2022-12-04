@@ -17,9 +17,10 @@ class Conductor(ppb.Sprite):
         super(Conductor, self).__init__()
         self.image = None
         self.song = Song(song_name)
+        self.music = Music(song_name)
         self.bpm = 0
         self.sec_per_beat = None
-        self.song_position = None
+        self.song_position = self.music.music_position
         self.last_beat = None
 
     def start(self):

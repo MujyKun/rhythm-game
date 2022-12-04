@@ -124,7 +124,7 @@ class BeatTrigger(RectangleSprite):
         self.position += self.direction * self.speed * update_event.time_delta
         for t in update_event.scene.get(kind=BeatTrigger):
             if (t.position - self.position).length <= self.width and t != self:
-                signal(ppb.events.PlaySound(ppb.Sound("beat_1.wav")))
+                signal(ppb.events.PlaySound(ppb.Sound("assets/beat_1.wav")))
                 t.reset()
                 self.reset()
 
