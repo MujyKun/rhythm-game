@@ -134,6 +134,11 @@ class Player(Sprite):
         else:
             return 1.00
 
+    def reset(self):
+        self.hits = 0
+        self.misses = 0
+        self.max_health = 10
+
     def walk_left(self):
         """Make the animation walk left."""
         self._direction_walking = self.LEFT
