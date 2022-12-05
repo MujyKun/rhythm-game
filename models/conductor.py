@@ -70,4 +70,5 @@ class Conductor(ppb.Sprite):
     def on_key_pressed(self, key_event: ppb.events.KeyPressed, signal):
         if key_event.key == self.PLAY:
             signal(ext.music_events.PlayMusic(self.music))
+            signal(ext.music_events.StartVis())
             self.start(key_event.scene)

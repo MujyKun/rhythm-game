@@ -14,3 +14,7 @@ class StopMusic:
 @dataclass
 class PauseMusic:
     sound: "ppb.assetlib.Asset" = None
+
+@dataclass
+class StartVis:
+    sound: "ppb.assetlib.Asset" = None

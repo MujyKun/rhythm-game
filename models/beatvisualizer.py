@@ -2,6 +2,7 @@ import ppb
 
 from ppb import Sprite, RectangleSprite, Rectangle, Vector
 from ppb.assetlib import AbstractAsset
+from models import Conductor
 
 
 class BeatVisualizer(object):
@@ -146,18 +147,27 @@ class BeatTrigger(RectangleSprite):
         # Because this using seconds instead of time, it will go out of sync if
         # frame rate is not constant.
         self.bpm = bpm
-        self.secPerBeat = 60 / bpm
-        self.speed = 10 / (self.secPerBeat)
-        self.image = image or Rectangle(65, 65, 65, (1, 2))
+        self.speed = 2 / (60 / self.bpm)
+        self.image = image or Rectangle(255, 255, 255, (1, 2))
         self.layer = layer
+        self.paused = True
 
     def on_update(self, update_event, signal):
-        self.position += self.direction * self.speed * update_event.time_delta
+        for conduct in update_event.scene.get(kind=Conductor):
+            # Update speed if bpm changes
+            if conduct.bpm != self.bpm:
+                self.bpm = conduct.bpm
+                self.speed = 2 / conduct.sec_per_Beat
+        if not self.paused:
+            # Only move when the song starts
+            self.position += self.direction * self.speed * update_event.time_delta
         for t in update_event.scene.get(kind=BeatTrigger):
             if (t.position - self.position).length <= self.width and t != self:
-                signal(ppb.events.PlaySound(ppb.Sound("assets/beat_1.wav")))
                 t.reset()
                 self.reset()
+
+    def on_start_vis(self, event, signal):
+        self.paused = False
 
     def reset(self):
         self.position = self.start_pos
