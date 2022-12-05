@@ -104,6 +104,7 @@ class Song:
         self.current_beat = 0
         speed = 1
         for beat_zone in self.beat_zones:
+            beat_zone.scene = scene
             scene.add(beat_zone)
         self.arrange_tiles(tile_speed=speed, bpm=bpm)
         for tile in self.tiles:

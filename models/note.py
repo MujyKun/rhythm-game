@@ -44,6 +44,7 @@ class Note(RectangleSprite):
         if self.visible:
             scene = self.scene = event.scene
             for floor in scene.get(kind=Floor):
+                # print(f"Note -> {self.song.current_beat} -> {self.play_at}")
                 if is_colliding(self, floor):
                     self.reset()
 
@@ -53,10 +54,10 @@ class Note(RectangleSprite):
                     self.play(signal)
             self.position += self.direction * self.speed * event.time_delta
 
-            if self.song.current_beat >= self.play_at:
-                print(self.position)
-                self.reset()
-                self.play(signal)
+            # if self.song.current_beat >= self.play_at:
+            #     print(self.position)
+            #     self.reset()
+            #     self.play(signal)
 
     def reset(self):
         """Resets the tile to a default position and set it to not be visible."""
@@ -75,12 +76,12 @@ class Note(RectangleSprite):
         :param target_height: float
             The target's height.
         """
-        seconds_per_beat = 60 / bpm
+        seconds_per_beat = (60 / bpm)
         total_time_elapsed = 0
         time_delta = 0.16
         new_height = target_height
         seconds_to_beat = self.play_at * seconds_per_beat
-        dy = self.direction[1]
+        dy = -self.direction[1]
         while total_time_elapsed < seconds_to_beat:
             total_time_elapsed += time_delta
             new_height += speed * time_delta * dy

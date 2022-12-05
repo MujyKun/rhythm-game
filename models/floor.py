@@ -14,9 +14,9 @@ class Floor(RectangleSprite):
         The position the floor should start at.
     image_location: str
         The location of the image.
-    height: int
+    height: float
         Height of the floor.
-    width: int
+    width: float
         Width of the floor.
     """
 

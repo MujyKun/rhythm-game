@@ -44,5 +44,5 @@ from .fpsscene import FPSScene
 from .note import Note
 from .song import Song
 from .background import Background
-from .beatvisualizer import BeatVisualizer, BeatTrigger
 from .conductor import Conductor
+from .beatvisualizer import BeatVisualizer, BeatTrigger
