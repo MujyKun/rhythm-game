@@ -61,9 +61,14 @@ class Conductor(ppb.Sprite):
         self.last_beat = 0
         self.song.play(scene=scene, bpm=self.bpm, volume=volume)
 
-    def get_diff_time(self):
+    def get_last_diff_time(self):
         """Return the difference between the last beat and the current time in the playing song"""
         return self.music.music_position - self.last_beat
+
+    def get_next_diff_time(self):
+        """Return the difference between the next beat and the current time in the playing song"""
+        next_beat = self.last_beat + self.sec_per_beat
+        return next_beat - self.music.music_position
 
     def on_update(self, event, signal):
         if self.music.music_position > self.last_beat + self.sec_per_beat:
