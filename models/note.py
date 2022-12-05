@@ -36,7 +36,7 @@ class Note(RectangleSprite):
         self.position = ppb.Vector(0, 0)
         self.direction = ppb.Vector(0, -1)
         self.speed = 0
-        self.play_at = int(play_at) or 0
+        self.play_at = float(play_at) or 0
         self.sound_to_play = ppb.events.PlaySound(self.sound)
         self.layer = 2
         self.song = None
