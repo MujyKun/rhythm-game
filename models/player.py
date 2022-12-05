@@ -3,7 +3,7 @@ from typing import Optional
 import ppb
 from ppb import keycodes, Sprite, Vector
 from ppb.camera import Camera
-from ppb.events import KeyPressed, KeyReleased, PlaySound
+from ppb.events import KeyPressed, KeyReleased
 from ppb.features.animation import Animation
 from . import Floor, is_colliding
 
@@ -84,8 +84,12 @@ class Player(Sprite):
         # self.image = ppb.Image(image_location)
         # self.image = Animation("assets/player/left_walk/{0..8}.png", 8)
         self._folder_name = f"assets/player/{player_type}/"
-        self._left_walk_animation = Animation(self._folder_name + "left_walk/{0..8}.png", 8)
-        self._right_walk_animation = Animation(self._folder_name + "right_walk/{0..8}.png", 8)
+        self._left_walk_animation = Animation(
+            self._folder_name + "left_walk/{0..8}.png", 8
+        )
+        self._right_walk_animation = Animation(
+            self._folder_name + "right_walk/{0..8}.png", 8
+        )
         self._stand_image = ppb.Image(self._folder_name + "stand_still/0.png")
 
         self.image = None

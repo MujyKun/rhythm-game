@@ -1,2 +1,2 @@
-ppb>="1.1"
-pysdl2-dll==2.0.20
+ppb>=1.1
+pysdl2-dll>=2.26.0

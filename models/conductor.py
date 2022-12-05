@@ -1,4 +1,5 @@
 import ppb
+from ppb import keycodes
 import ext.music_events
 from models import Song
 from ext import Music
@@ -10,13 +11,15 @@ class Conductor(ppb.Sprite):
 
     Parameters
     ----------
-    song_name: str
-        The song name that is to be loaded and managed.
+    song_file_location: str
+        The song file location that is to be loaded and managed.
     music_name: str
         The music filename that is to be loaded and played.
     bpm: int
         The beat per minute of the song.
-        
+    floor_height: float
+        Height to generate beat zones.
+
     Attributes
     ----------
     song: models.Song
@@ -31,31 +34,40 @@ class Conductor(ppb.Sprite):
         The position within the song that last time a beat was played.
     """
 
-    def __init__(self, song_name, music_name="assets/default.wav", bpm=100):
+    PLAY = keycodes.L
+
+    def __init__(
+        self,
+        song_file_location,
+        music_name="assets/default.wav",
+        bpm=100,
+        floor_height: float = None,
+    ):
         super(Conductor, self).__init__()
         self.image = None
-        self.song = Song.load(song_name)
+        self.song = Song.load(song_file_location, floor_height=floor_height)
         self.music = Music(music_name)
         self.music.volume = 0.05
         self.bpm = bpm
-        self.sec_per_beat = 0
-        self.last_beat = 0
-        self.playing = False
-
-    def start(self, scene):
-        """Start self.song and set up beat variables"""
-        self.playing = True
         self.sec_per_beat = 60 / self.bpm
         self.last_beat = 0
-        self.song.play(scene=scene, volume=0.1)
+        self.playing = False
+        self._beat = ppb.events.PlaySound(ppb.Sound("assets/beat_1.wav"))
+        self._beat.sound.volume = 0.05
+
+    def start(self, scene, volume=0.1):
+        """Start Song object and set up beat variables"""
+        self.playing = True
+        self.last_beat = 0
+        self.song.play(scene=scene, bpm=self.bpm, volume=volume)
 
     def on_update(self, event, signal):
         if self.music.music_position > self.last_beat + self.sec_per_beat:
-            signal(ppb.events.PlaySound(ppb.Sound('assets/beat_1.wav')))
-            print("BANG")
+            signal(self._beat)
             self.last_beat += self.sec_per_beat
+        self.song.current_beat = self.last_beat
 
     def on_key_pressed(self, key_event: ppb.events.KeyPressed, signal):
-        if key_event.key == ppb.keycodes.L:
+        if key_event.key == self.PLAY:
             signal(ext.music_events.PlayMusic(self.music))
             self.start(key_event.scene)

@@ -131,6 +131,7 @@ class MusicController(SdlSubSystem, LoggingMixin):
     """
     A controller for Music objects. To be added in the systems parameter of ppb.GameEngine.
     """
+
     def __init__(self, **kwargs):
         super(MusicController, self).__init__(**kwargs)
         self._current_music_playing = None
@@ -182,9 +183,7 @@ class MusicController(SdlSubSystem, LoggingMixin):
 
     def on_stop_music(self, event, signal):
         try:
-            music_channel = mix_call(
-                Mix_HaltMusic, _check_error=lambda rv: rv == -1
-            )
+            music_channel = mix_call(Mix_HaltMusic, _check_error=lambda rv: rv == -1)
         except SdlMixerError as e:
             raise
         else:

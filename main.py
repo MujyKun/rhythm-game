@@ -6,22 +6,18 @@ from ext import MusicController
 
 RES = (1080, 720)
 # RES = (2560, 1440)
+SONG_FILE_LOCATION = "assets/coldplay.json"
+MUSIC_NAME = "assets/coldplay.mp3"
 
 
 def setup(scene: ppb.Scene):
     scene.background_color = (255, 255, 255)
 
-    # note = Note("a", 4)
-    # scene.add(note)
-    c = Conductor(song_name="assets/testsong.json", music_name="legends.mp3")
-    #test_song = Song.load("assets/testsong.json")
-
-    #test_song.play(scene, volume=0.1)
+    floor = Floor(
+        position=(0, -8), image_location="assets/floor.png", width=30, height=5.5
+    )
     sprites = [
         Background(*RES, animate=True),
-        Floor(
-            position=(0, -8), image_location="assets/floor.png", width=30, height=5.5
-        ),
         Player(
             position=(-8, -3),
             vertical_movement=False,
@@ -34,11 +30,18 @@ def setup(scene: ppb.Scene):
             move_outside_camera=False,
         ),
         Background.get_moon(),
+        Conductor(
+            song_file_location=SONG_FILE_LOCATION,
+            music_name=MUSIC_NAME,
+            bpm=136,
+            floor_height=floor.top,
+        ),
+        floor,
     ]
 
     for sprite in sprites:
         scene.add(sprite)
-    scene.add(c)
+
 
 if __name__ == "__main__":
     ppb.run(
@@ -47,5 +50,5 @@ if __name__ == "__main__":
         starting_scene=FPSScene,
         log_level=logging.INFO,
         resolution=RES,
-        systems=(MusicController,)
+        systems=(MusicController,),
     )
