@@ -6,8 +6,9 @@ from ext import MusicController
 
 RES = (1080, 720)
 # RES = (2560, 1440)
-SONG_FILE_LOCATION = "assets/coldplay.json"
-MUSIC_NAME = "assets/coldplay.mp3"
+SONG_FILE_LOCATION = "assets/nekozilla.json"
+MUSIC_NAME = "assets/nekozilla.mp3"
+BPM = 128
 
 
 def setup(scene: ppb.Scene):
@@ -33,7 +34,7 @@ def setup(scene: ppb.Scene):
         Conductor(
             song_file_location=SONG_FILE_LOCATION,
             music_name=MUSIC_NAME,
-            bpm=136,
+            bpm=BPM,
             floor_height=floor.top,
         ),
         floor,

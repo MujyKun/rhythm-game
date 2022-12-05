@@ -29,17 +29,28 @@ class Note(RectangleSprite):
         # Set up img as another variable and image to None
         # so that we can "trick" the render not to render this Sprite.
         self.name = note_type
-        self._img = Image(f"/assets/tiles/{note_type[0:-1]}.png")
-        self.sound = Sound(f"/assets/notes/{note_type}.wav")
+
+        if self.is_blank:
+            self._img = Image(f"/assets/tiles/{note_type}.png")
+            self.sound = None
+            self.sound_to_play = None
+        else:
+            self._img = Image(f"/assets/tiles/{note_type[0:-1]}.png")
+            self.sound = Sound(f"/assets/notes/{note_type}.wav")
+            self.sound_to_play = ppb.events.PlaySound(self.sound)
+
         self.image = None
         self.scene = None
         self.position = ppb.Vector(0, 0)
         self.direction = ppb.Vector(0, -1)
         self.speed = 0
         self.play_at = float(play_at) or 0
-        self.sound_to_play = ppb.events.PlaySound(self.sound)
         self.layer = 2
         self.song = None
+
+    @property
+    def is_blank(self):
+        return 'blank' in self.name
 
     def on_update(self, event, signal):
         if self.visible:
@@ -111,7 +122,8 @@ class Note(RectangleSprite):
         signal: ppb.events.Signal
             The signal to invoke the PlaySound event.
         """
-        signal(self.sound_to_play)
+        if not self.is_blank:
+            signal(self.sound_to_play)
 
     # def on_key_pressed(self, key_event, signal):
     #     if not self.visible:

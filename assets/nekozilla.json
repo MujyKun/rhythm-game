@@ -1,0 +1,22 @@
+{
+  "song": {
+    "name": "Test Song",
+    "tiles": {
+      "9.1": ["E4", "E5"],
+      "15": ["A4"],
+      "17": ["E4"],
+      "18": ["blank", "blank"],
+      "24": ["blank", "blank"],
+      "30": ["blank", "blank"],
+      "36": ["blank", "blank"],
+      "42": ["blank", "blank"],
+      "50": ["blank", "blank"],
+      "70": ["blank", "blank"],
+      "80": ["blank", "blank"],
+      "86": ["blank", "blank"],
+      "92": ["blank", "blank"],
+      "108": ["blank", "blank"],
+      "120": ["blank", "blank"]
+    }
+  }
+}

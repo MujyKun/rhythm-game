@@ -118,7 +118,8 @@ class Song:
         for tile in self.tiles:
             scene.add(tile)
             tile.start(tile.position, speed=speed, song=self)
-            tile.sound_to_play.sound.volume = volume
+            if not tile.is_blank:
+                tile.sound_to_play.sound.volume = volume
 
     def arrange_tiles(self, tile_speed, bpm):
         """
