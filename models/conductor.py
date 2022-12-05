@@ -63,9 +63,9 @@ class Conductor(ppb.Sprite):
 
     def on_update(self, event, signal):
         if self.music.music_position > self.last_beat + self.sec_per_beat:
-            signal(self._beat)
+            # signal(self._beat)
             self.last_beat += self.sec_per_beat
-        self.song.current_beat = self.last_beat
+        self.song.current_beat = self.music.music_position
 
     def on_key_pressed(self, key_event: ppb.events.KeyPressed, signal):
         if key_event.key == self.PLAY:

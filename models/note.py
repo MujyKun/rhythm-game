@@ -29,9 +29,9 @@ class Note(RectangleSprite):
         # Set up img as another variable and image to None
         # so that we can "trick" the render not to render this Sprite.
         self.name = note_type
-        self._img = Image(f"/assets/tiles/{note_type}.png")
+        self._img = Image(f"/assets/tiles/{note_type[0:-1]}.png")
+        self.sound = Sound(f"/assets/notes/{note_type}.wav")
         self.image = None
-        self.sound = Sound(f"/assets/piano-{note_type}.wav")
         self.scene = None
         self.position = ppb.Vector(0, 0)
         self.direction = ppb.Vector(0, -1)
@@ -44,19 +44,21 @@ class Note(RectangleSprite):
     def on_update(self, event, signal):
         if self.visible:
             scene = self.scene = event.scene
-            # for floor in scene.get(kind=Floor):
-            #     print(f"Note{self.name} -> {self.song.current_beat} -> {self.play_at}")
-            #     if is_colliding(self, floor):
-            #         self.reset()
-            #
-            # for player in scene.get(kind=Player):
-            #     if is_colliding(self, player):
-            #         self.reset()
-            #         self.play(signal)
-            # self.position += self.direction * self.speed * event.time_delta
+            for floor in scene.get(kind=Floor):
+                print(f"Note{self.name} -> {self.song.current_beat} -> {self.play_at}")
+                if is_colliding(self, floor):
+                    self.reset()
+                    self.play(signal)
+
+            for player in scene.get(kind=Player):
+                if is_colliding(self, player):
+                    self.reset()
+                    self.play(signal)
+            self.position += self.direction * self.speed * event.time_delta
 
             if self.song.current_beat >= self.play_at:
                 print(self.position)
+                print(self.song.current_beat, self.play_at)
                 self.reset()
                 self.play(signal)
 

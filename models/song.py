@@ -101,6 +101,7 @@ class Song:
 
     def play(self, scene, bpm, volume=0.1):
         """Play the song (game) in the scene."""
+        volume=1
         self.current_beat = 0
         speed = 1
         for beat_zone in self.beat_zones:
@@ -113,6 +114,14 @@ class Song:
             tile.sound_to_play.sound.volume = volume
 
     def arrange_tiles(self, tile_speed, bpm):
+        """
+        Arrange the tiles into columns.
+
+        :param tile_speed: float
+            The speed the tiles are going.
+        :param bpm: int
+            Beats per minute of the song.
+        """
         beats_occupied = {}
         for tile in self.tiles:
             while True:
