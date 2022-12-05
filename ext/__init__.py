@@ -1,2 +1,2 @@
 from .music import Music, MusicController
-from . import music_events
+from . import ext_events

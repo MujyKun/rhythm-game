@@ -3,7 +3,8 @@ from typing import Optional
 import ppb
 from ppb import RectangleSprite, Vector, Image
 from ppb.events import KeyPressed
-from . import is_colliding
+import ext.ext_events
+from . import is_colliding, check_in_range
 
 
 class BeatZone(RectangleSprite):
@@ -28,9 +29,25 @@ class BeatZone(RectangleSprite):
         self.scene: Optional[ppb.Scene] = None
         self.__KEY = trigger_key
 
-    # def on_key_pressed(self, key_event: KeyPressed, signal):
-    #     """When a key is pressed."""
-    #     if key_event.key == self.__KEY:
-    #         from . import Player  # avoid circular import
-    #         for player in self.scene.get(kind=Player):
-    #             if is_colliding(self, player):
+    def on_key_pressed(self, key_event: KeyPressed, signal):
+        """When a key is pressed."""
+        if key_event.key == self.__KEY:
+            from . import Player, Conductor, Note  # avoid circular import
+            for player in self.scene.get(kind=Player):
+                # get time diff
+                for conduct in key_event.scene.get(kind=Conductor):
+                    time_diff = conduct.get_diff_time()
+
+                # remove/play tile and SCORE
+                for tile in key_event.scene.get(kind=Note):
+                    if (check_in_range(tile.position.x, self.left, self.right) and
+                            check_in_range(tile.position.y, self.top, self.top+1) and
+                            time_diff < 0.25):
+                        tile.play(signal)
+                        tile.reset()
+                        player.hits += 1
+
+                if time_diff < 0.25:
+                    print("HITS: " + str(player.hits))
+                    print("MISSES: " + str(player.misses))
+                    print("TOTAL: " + str(player.hits + player.misses))

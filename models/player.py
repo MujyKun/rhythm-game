@@ -71,6 +71,7 @@ class Player(Sprite):
         player_type="naked",
         move_outside_camera=True,
         several_jumps=False,
+        max_health=10
     ):
         super(Player, self).__init__()
         position = position or (0, 0)
@@ -103,6 +104,9 @@ class Player(Sprite):
         self._move_outside_camera = move_outside_camera
         self._several_jumps = several_jumps
         self.layer = 3
+        self.max_health = max_health
+        self.hits = 0
+        self.misses = 0
 
     @property
     def camera(self) -> Optional[Camera]:
@@ -115,6 +119,14 @@ class Player(Sprite):
 
         camera: Camera = self.scene.main_camera
         return camera
+
+    @property
+    def health(self):
+        return self.max_health - self.misses
+
+    @property
+    def accuracy(self):
+        return self.hits / (self.hits + self.misses)
 
     def walk_left(self):
         """Make the animation walk left."""
