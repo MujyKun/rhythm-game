@@ -65,7 +65,7 @@ class BeatZone(RectangleSprite):
                 # remove/play tile and SCORE
                 for tile in key_event.scene.get(kind=Note):
                     if (check_in_range(tile.position.x, self.left, self.right) and
-                            check_in_range(tile.position.y, self.top, self.top+1) and
+                            check_in_range(tile.position.y, self.bottom-0.5, self.top+0.5) and
                             time_diff < 0.25):
                         self.set_glow_image()
                         print("in range")
