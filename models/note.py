@@ -28,6 +28,7 @@ class Note(RectangleSprite):
         super().__init__()
         # Set up img as another variable and image to None
         # so that we can "trick" the render not to render this Sprite.
+        self.name = note_type
         self._img = Image(f"/assets/tiles/{note_type}.png")
         self.image = None
         self.sound = Sound(f"/assets/piano-{note_type}.wav")
@@ -44,7 +45,7 @@ class Note(RectangleSprite):
         if self.visible:
             scene = self.scene = event.scene
             for floor in scene.get(kind=Floor):
-                # print(f"Note -> {self.song.current_beat} -> {self.play_at}")
+                #print(f"Note{self.note} -> {self.song.current_beat} -> {self.play_at}")
                 if is_colliding(self, floor):
                     self.reset()
 
@@ -78,14 +79,14 @@ class Note(RectangleSprite):
         """
         seconds_per_beat = (60 / bpm)
         total_time_elapsed = 0
-        time_delta = 0.16
+        time_delta = 0.016
         new_height = target_height
         seconds_to_beat = self.play_at * seconds_per_beat
         dy = -self.direction[1]
         while total_time_elapsed < seconds_to_beat:
             total_time_elapsed += time_delta
             new_height += speed * time_delta * dy
-        return new_height
+        return new_height + 0.5
 
     def start(self, position, speed, song):
         """
