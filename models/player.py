@@ -108,6 +108,7 @@ class Player(Sprite):
         self.hits = 0
         self.misses = 0
         self._health_label = None
+        self._accuracy_label = None
 
     @property
     def camera(self) -> Optional[Camera]:
@@ -127,7 +128,11 @@ class Player(Sprite):
 
     @property
     def accuracy(self):
-        return self.hits / (self.hits + self.misses)
+        total = self.hits + self.misses
+        if total != 0:
+            return self.hits / (self.hits + self.misses)
+        else:
+            return 1.00
 
     def walk_left(self):
         """Make the animation walk left."""
@@ -146,13 +151,17 @@ class Player(Sprite):
 
     def on_update(self, event, signal):
         scene = self.scene = event.scene
-        # Update the health label
-        if self._health_label:
+        # Update the health/accuracy label
+        if self._health_label and self._accuracy_label:
             scene.remove(self._health_label)
-        self._health_label = Label("Health: " + str(self.health), size=50)
-        health_x, health_y = scene.main_camera.top_right
-        self._health_label.position = Vector(health_x-2, health_y-0.5)
+            scene.remove(self._accuracy_label)
+        self._health_label = Label(f"Health: {self.health}", size=50)
+        self._accuracy_label = Label(f"Accuracy: {round(self.accuracy, 2):.2f}", size=50)
+        health_x, health_y = scene.main_camera.top_left
+        self._health_label.position = Vector(health_x+2, health_y-2.5)
+        self._accuracy_label.position = Vector(health_x+2.9, health_y-3.5)
         scene.add(self._health_label)
+        scene.add(self._accuracy_label)
 
         self.direction += Vector(0, -self.GRAVITY) * event.time_delta
 
