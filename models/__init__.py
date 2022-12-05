@@ -38,8 +38,8 @@ def is_colliding(first_sprite, second_sprite) -> bool:
 
 from .zone import BeatZone
 from .floor import Floor
-from .player import Player
 from .label import Label
+from .player import Player
 from .fpsscene import FPSScene
 from .note import Note
 from .song import Song

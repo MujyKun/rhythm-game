@@ -5,7 +5,7 @@ from ppb import keycodes, Sprite, Vector
 from ppb.camera import Camera
 from ppb.events import KeyPressed, KeyReleased
 from ppb.features.animation import Animation
-from . import Floor, is_colliding
+from . import Floor, Label, is_colliding
 
 
 class Player(Sprite):
@@ -107,6 +107,7 @@ class Player(Sprite):
         self.max_health = max_health
         self.hits = 0
         self.misses = 0
+        self._health_label = None
 
     @property
     def camera(self) -> Optional[Camera]:
@@ -145,6 +146,14 @@ class Player(Sprite):
 
     def on_update(self, event, signal):
         scene = self.scene = event.scene
+        # Update the health label
+        if self._health_label:
+            scene.remove(self._health_label)
+        self._health_label = Label("Health: " + str(self.health), size=50)
+        health_x, health_y = scene.main_camera.top_right
+        self._health_label.position = Vector(health_x-2, health_y-0.5)
+        scene.add(self._health_label)
+
         self.direction += Vector(0, -self.GRAVITY) * event.time_delta
 
         for floor in scene.get(kind=Floor):

@@ -72,8 +72,3 @@ class BeatZone(RectangleSprite):
                         tile.play(signal)
                         tile.reset()
                         player.hits += 1
-
-                if time_diff < 0.25:
-                    print("HITS: " + str(player.hits))
-                    print("MISSES: " + str(player.misses))
-                    print("TOTAL: " + str(player.hits + player.misses))
