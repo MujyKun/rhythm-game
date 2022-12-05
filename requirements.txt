@@ -1,2 +1,2 @@
-ppb>=1.1
+git+https://github.com/MujyKun/pursuedpybear@canon
 pysdl2-dll>=2.26.0
