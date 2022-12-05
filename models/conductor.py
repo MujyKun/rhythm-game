@@ -77,7 +77,7 @@ class Conductor(ppb.Sprite):
             signal(ext.ext_events.StartVis())
             self.start(key_event.scene)
 
-        from models import Player
-        for player in key_event.scene.get(kind=Player):
-            player.reset()
+            from models import Player
+            for player in key_event.scene.get(kind=Player):
+                player.reset()
 

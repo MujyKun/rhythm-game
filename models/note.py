@@ -45,10 +45,14 @@ class Note(RectangleSprite):
         if self.visible:
             scene = self.scene = event.scene
             for floor in scene.get(kind=Floor):
-                if is_colliding(self, floor):
-                    self.reset()
-                    for player in scene.get(kind=Player):
+                for player in scene.get(kind=Player):
+                    if is_colliding(self, floor):
+                        self.reset()
                         player.misses += 1
+                    if is_colliding(self, player):
+                        self.reset()
+                        self.play(signal)
+                        player.hits += 1
 
             self.position += self.direction * self.speed * event.time_delta
 
