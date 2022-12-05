@@ -117,8 +117,8 @@ class Song:
         for tile in self.tiles:
             while True:
                 random_column = randint(0, len(self.x_columns) - 1)
-                beats_occupied.get(random_column)
-                if beats_occupied and beats_occupied.get(tile.play_at):
+                column_data = beats_occupied.get(random_column)
+                if column_data and column_data.get(tile.play_at):
                     continue
 
                 beats_occupied[random_column] = {tile.play_at: True}
