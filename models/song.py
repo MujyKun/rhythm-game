@@ -53,10 +53,16 @@ class Song:
         """
         zones = []
         images = [
-            "assets/left_arrow.png",
-            "assets/down_arrow.png",
-            "assets/up_arrow.png",
-            "assets/right_arrow.png",
+            "assets/arrows/left_arrow.png",
+            "assets/arrows/down_arrow.png",
+            "assets/arrows/up_arrow.png",
+            "assets/arrows/right_arrow.png",
+        ]
+        glow_images = [
+            "assets/arrows/left_arrow_glow.png",
+            "assets/arrows/down_arrow_glow.png",
+            "assets/arrows/up_arrow_glow.png",
+            "assets/arrows/right_arrow_glow.png",
         ]
         from ppb import keycodes
 
@@ -67,6 +73,7 @@ class Song:
                     (column, height + 1),
                     image_location=images[idx],
                     trigger_key=trigger_keys[idx],
+                    glow_image_location=glow_images[idx]
                 )
             )
         return zones

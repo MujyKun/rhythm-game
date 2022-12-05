@@ -19,15 +19,39 @@ class BeatZone(RectangleSprite):
         File location of the image.
     """
 
-    def __init__(self, position: tuple, image_location, trigger_key):
+    def __init__(self, position: tuple, image_location, glow_image_location, trigger_key):
         super(BeatZone, self).__init__()
-        self.image = Image(image_location)
+        self._regular_image = Image(image_location)
+        self._glow_image = Image(glow_image_location)
+        self.image = self._regular_image
         self.width = 2
         self.height = 1
         self.position = Vector(*position)
         self.layer = 3
         self.scene: Optional[ppb.Scene] = None
         self.__KEY = trigger_key
+        self._glowing_since = False
+        self._glow_for = 0.25  # how long the zone should glow for.
+
+    def set_regular_image(self):
+        """Set the image to its default state."""
+        self._glowing_since = None
+        self.image = self._regular_image
+
+    def set_glow_image(self):
+        """Set the image to its glow state."""
+        self._glowing_since = ppb.get_time()
+        self.image = self._glow_image
+
+    @property
+    def is_glowing(self):
+        """Whether the zone is glowing."""
+        return bool(self._glowing_since)
+
+    def on_update(self, event, signal):
+        if self.is_glowing:
+            if ppb.get_time() - self._glowing_since > self._glow_for:
+                self.set_regular_image()
 
     def on_key_pressed(self, key_event: KeyPressed, signal):
         """When a key is pressed."""
@@ -43,6 +67,8 @@ class BeatZone(RectangleSprite):
                     if (check_in_range(tile.position.x, self.left, self.right) and
                             check_in_range(tile.position.y, self.top, self.top+1) and
                             time_diff < 0.25):
+                        self.set_glow_image()
+                        print("in range")
                         tile.play(signal)
                         tile.reset()
                         player.hits += 1
