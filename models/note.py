@@ -44,21 +44,13 @@ class Note(RectangleSprite):
     def on_update(self, event, signal):
         if self.visible:
             scene = self.scene = event.scene
-            # for floor in scene.get(kind=Floor):
-            #     print(f"Note{self.name} -> {self.song.current_beat} -> {self.play_at}")
-            #     if is_colliding(self, floor):
-            #         self.reset()
-            #
-            # for player in scene.get(kind=Player):
-            #     if is_colliding(self, player):
-            #         self.reset()
-            #         self.play(signal)
-            # self.position += self.direction * self.speed * event.time_delta
+            for floor in scene.get(kind=Floor):
+                if is_colliding(self, floor):
+                    self.reset()
+                    for player in scene.get(kind=Player):
+                        player.misses += 1
 
-            if self.song.current_beat >= self.play_at:
-                print(self.position)
-                self.reset()
-                self.play(signal)
+            self.position += self.direction * self.speed * event.time_delta
 
     def reset(self):
         """Resets the tile to a default position and set it to not be visible."""
