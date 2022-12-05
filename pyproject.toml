@@ -7,9 +7,9 @@ authors = ["MujyKun <mujy@irenebot.com>", "DrewBieger"]
 [tool.poetry.dependencies]
 python = "^3.10"
 #ppb = "^1.1"
-#ppb = {git = "https://github.com/MujyKun/pursuedpybear.git"}
-#black = "^22.10.0"
-#pysdl2-dll = "^2.26.0"
+ppb = {git = "https://github.com/MujyKun/pursuedpybear.git"}
+black = "^22.10.0"
+pysdl2-dll = "^2.26.0"
 
 [tool.poetry.dev-dependencies]
 
