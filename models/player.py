@@ -103,7 +103,7 @@ class Player(Sprite):
         self._direction_walking = None
         self._move_outside_camera = move_outside_camera
         self._several_jumps = several_jumps
-        self.layer = 3
+        self.layer = 4
         self.max_health = max_health
         self.hits = 0
         self.misses = 0

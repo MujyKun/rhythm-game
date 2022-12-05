@@ -64,7 +64,7 @@ class Song:
         for idx, column in enumerate(self.x_columns, start=0):
             zones.append(
                 BeatZone(
-                    (column, height),
+                    (column, height + 1),
                     image_location=images[idx],
                     trigger_key=trigger_keys[idx],
                 )
