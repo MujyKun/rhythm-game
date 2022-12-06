@@ -97,7 +97,7 @@ A rhythm game created for the CSCI-437 final project.
        - Follows very similar design principles as our own game engines: Sprites, Scenes.
        - Easy to extend with adding new systems.
        - Easy to add events to be used with your own classes.
-       - Camera splits up the screen into sub sections, so can go outside of the canvas resolution.
+       - Camera splits up the screen into subsections, so allows the expansion of the canvas resolution.
        - The origin is the center of the screen, so it uses a more familiar quadrant system for positioning of Sprites.
        - Very easy to get started and create a simple example.
    - Weaknesses
@@ -111,7 +111,7 @@ A rhythm game created for the CSCI-437 final project.
            - Supports PySDL2, but only supports pysdl2-dll version 2.0.20.
            - pysdl2-dll offers a newer SDLMixer that offers Music functionality.
        - Not enough examples to work with.
-       - Unfamiliar to work with and allowed easy mess ups.
+       - Unfamiliar to work with and allowed easy mess-ups.
 
 
 ## Example GIFs
