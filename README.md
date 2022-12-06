@@ -39,7 +39,7 @@ A rhythm game created for the CSCI-437 final project.
      - Animated backgrounds should go [here](assets/background)
    - Music Tiles
      - Images can be found [here](assets/tiles)
-     - Audio can be found [here](assets)
+     - Audio can be found [here](assets/notes)
    - Songs
      - Songs can be generated and loaded using JSON.
      - A song should be saved [here](assets)
@@ -113,25 +113,25 @@ A rhythm game created for the CSCI-437 final project.
 ## Example GIFs
 
 ### Different Player Types
-![Different Players](example_gifs/different_players.gif)
+![Different Players](doc/example_gifs/different_players.gif)
 
 ### "Earth" Gravity
-![Earth Gravity](example_gifs/earth_gravity.gif)
+![Earth Gravity](doc/example_gifs/earth_gravity.gif)
 
 ### "Moon" Gravity
-![Moon Gravity](example_gifs/moon_gravity.gif)
+![Moon Gravity](doc/example_gifs/moon_gravity.gif)
 
 ### Player Locked to Camera
-![Player Camera Locked](example_gifs/locked_to_camera.gif)
+![Player Camera Locked](doc/example_gifs/locked_to_camera.gif)
 
 ### Camera Following Player
-![Camera Following Player](example_gifs/scrollable_camera.gif)
+![Camera Following Player](doc/example_gifs/scrollable_camera.gif)
 
 ### Camera Not Following Player
-![Camera Not Following Player](example_gifs/nonscrollable_camera.gif)
+![Camera Not Following Player](doc/example_gifs/nonscrollable_camera.gif)
 
 ### Several Jumps
-![Several Jumps](example_gifs/several_jumps.gif)
+![Several Jumps](doc/example_gifs/several_jumps.gif)
 
 
 
