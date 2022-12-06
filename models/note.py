@@ -53,6 +53,7 @@ class Note(RectangleSprite):
         return 'blank' in self.name
 
     def on_update(self, event, signal):
+        # print(self.song.current_beat)
         if self.visible:
             scene = self.scene = event.scene
             for floor in scene.get(kind=Floor):

@@ -37,10 +37,15 @@ class Song:
         self.name: str = name
         self.tiles: List[Note] = tiles or []
         self._spread = spread
-        self.current_beat = 0
+        self.current_beat_in_seconds = 0
         self.x_columns = [-4, -2, 2, 4]
         self.beat_zones = self._create_beat_zones(height=height or -4)
         self._floor_height = height
+        self.bpm = -1
+
+    @property
+    def current_beat(self):
+        return (self.bpm / 60) * self.current_beat_in_seconds
 
     def _create_beat_zones(self, height):
         """
@@ -108,7 +113,8 @@ class Song:
 
     def play(self, scene, bpm, volume=0.1, tile_speed=1):
         """Play the song (game) in the scene."""
-        self.current_beat = 0
+        self.bpm = bpm
+        self.current_beat_in_seconds = 0
         for beat_zone in self.beat_zones:
             beat_zone.scene = scene
             scene.add(beat_zone)
