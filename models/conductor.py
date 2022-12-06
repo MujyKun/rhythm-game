@@ -55,11 +55,11 @@ class Conductor(ppb.Sprite):
         self._beat = ppb.events.PlaySound(ppb.Sound("assets/beat_1.wav"))
         self._beat.sound.volume = 0.05
 
-    def start(self, scene, volume=0.1):
+    def start(self, scene, volume=0.1, tile_speed=1):
         """Start Song object and set up beat variables"""
         self.playing = True
         self.last_beat = 0
-        self.song.play(scene=scene, bpm=self.bpm, volume=volume)
+        self.song.play(scene=scene, bpm=self.bpm, volume=volume, tile_speed=tile_speed)
 
     def get_last_diff_time(self):
         """Return the difference between the last beat and the current time in the playing song"""
@@ -80,7 +80,7 @@ class Conductor(ppb.Sprite):
         if key_event.key == self.PLAY:
             signal(ext.ext_events.PlayMusic(self.music))
             signal(ext.ext_events.StartVis())
-            self.start(key_event.scene)
+            self.start(key_event.scene, volume=1, tile_speed=7)
 
             from models import Player
             for player in key_event.scene.get(kind=Player):

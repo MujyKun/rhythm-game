@@ -106,18 +106,16 @@ class Song:
             name=song.get("name"), tiles=tiles, spread=spread, height=floor_height
         )
 
-    def play(self, scene, bpm, volume=0.1):
+    def play(self, scene, bpm, volume=0.1, tile_speed=1):
         """Play the song (game) in the scene."""
-        volume=1
         self.current_beat = 0
-        speed = 1
         for beat_zone in self.beat_zones:
             beat_zone.scene = scene
             scene.add(beat_zone)
-        self.arrange_tiles(tile_speed=speed, bpm=bpm)
+        self.arrange_tiles(tile_speed=tile_speed, bpm=bpm)
         for tile in self.tiles:
             scene.add(tile)
-            tile.start(tile.position, speed=speed, song=self)
+            tile.start(tile.position, speed=tile_speed, song=self)
             if not tile.is_blank:
                 tile.sound_to_play.sound.volume = volume
 
