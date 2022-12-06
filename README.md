@@ -91,7 +91,7 @@ A rhythm game created for the CSCI-437 final project.
 
 
 ## Game Engine
-### pursuedpybear (ppb) was used for this project.
+### [PursuedPyBear (ppb)](https://github.com/ppb/pursuedpybear) was used for this project.
    - Strengths
        - Built to be educational friendly.
        - Follows very similar design principles as our own game engines: Sprites, Scenes.
@@ -156,7 +156,7 @@ A rhythm game created for the CSCI-437 final project.
   - Built the framework for the game.
   - Built demo.
 - Managed Dependencies
-  - Created a fork of the game engine library (PPB) to fix dependencies issues with the sound controllers.
+  - Created a fork of the game engine library ([PPB](https://github.com/ppb/pursuedpybear)) to fix dependencies issues with the sound controllers.
   - Project is now easily installable with pip or poetry. 
 - Assets
   - Created animated player models for walking left, right, and standing still using the [Universal LPC Spritesheet Generator](https://sanderfrenken.github.io/Universal-LPC-Spritesheet-Character-Generator/#?body=Body_color_light&head=Human_male_light) 
