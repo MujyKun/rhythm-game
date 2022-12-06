@@ -85,15 +85,9 @@ class Note(RectangleSprite):
             The target's height.
         """
         seconds_per_beat = (60 / bpm)
-        total_time_elapsed = 0
-        time_delta = 0.016
-        new_height = target_height
         seconds_to_beat = self.play_at * seconds_per_beat
-        dy = -self.direction[1]
-        while total_time_elapsed < seconds_to_beat:
-            total_time_elapsed += time_delta
-            new_height += speed * time_delta * dy
-        return new_height + 0.5
+        # Need to add 0.5 to make the song play on beat.
+        return speed * seconds_to_beat + target_height + 0.5
 
     def start(self, position, speed, song):
         """
