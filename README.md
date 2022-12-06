@@ -86,6 +86,10 @@ A rhythm game created for the CSCI-437 final project.
 ![Game Design Document](doc/rhythm_game_game_design.png)
 
 
+## State Transition Diagram
+![State Transition Diagram](doc/rhythm_game_fsm.svg)
+
+
 ## Game Engine
 ### pursuedpybear (ppb) was used for this project.
    - Strengths
