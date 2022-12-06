@@ -42,10 +42,11 @@ class Conductor(ppb.Sprite):
         music_name="assets/default.wav",
         bpm=100,
         floor_height: float = None,
+        autoplay=False
     ):
         super(Conductor, self).__init__()
         self.image = None
-        self.song = Song.load(song_file_location, floor_height=floor_height)
+        self.song = Song.load(song_file_location, floor_height=floor_height, autoplay=autoplay)
         self.music = Music(music_name)
         self.music.volume = 0.05
         self.bpm = bpm

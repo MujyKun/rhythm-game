@@ -13,6 +13,8 @@ class Note(RectangleSprite):
         The note to create
     play_at: int
         The beat number to play at.
+    autoplay: bool
+        Whether the tile will autoplay.
 
     Attributes
     ----------
@@ -22,9 +24,12 @@ class Note(RectangleSprite):
         The direction the note is heading (usually down).
     play_at: int
         The beat the note will play at.
+    autoplay: bool
+        Whether the tile will autoplay.
+
     """
 
-    def __init__(self, note_type: str, play_at: int):
+    def __init__(self, note_type: str, play_at: int, autoplay=False):
         super().__init__()
         # Set up img as another variable and image to None
         # so that we can "trick" the render not to render this Sprite.
@@ -47,6 +52,7 @@ class Note(RectangleSprite):
         self.play_at = float(play_at) or 0
         self.layer = 2
         self.song = None
+        self.autoplay = autoplay
 
     @property
     def is_blank(self):
@@ -65,6 +71,10 @@ class Note(RectangleSprite):
                         self.reset()
                         self.play(signal)
                         player.hits += 1
+            if self.autoplay:
+                if self.song.current_beat >= self.play_at:
+                    self.reset()
+                    self.play(signal)
 
             self.position += self.direction * self.speed * event.time_delta
 

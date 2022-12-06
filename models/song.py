@@ -33,7 +33,7 @@ class Song:
         A list of note (tile) objects.
     """
 
-    def __init__(self, name: str, tiles=None, spread=False, height=None):
+    def __init__(self, name: str, tiles=None, spread=False, height=None, autoplay=False):
         self.name: str = name
         self.tiles: List[Note] = tiles or []
         self._spread = spread
@@ -42,6 +42,7 @@ class Song:
         self.beat_zones = self._create_beat_zones(height=height or -4)
         self._floor_height = height
         self.bpm = -1
+        self._autoplay = autoplay
 
     @property
     def current_beat(self):
@@ -84,7 +85,7 @@ class Song:
         return zones
 
     @staticmethod
-    def load(file_location, spread=False, floor_height=None):
+    def load(file_location, spread=False, floor_height=None, autoplay=False):
         """
         Load a song
 
@@ -95,6 +96,8 @@ class Song:
             By default, notes will fall into 4 columns.
         :param floor_height: float
             The floor height to start beat zones at.
+        :param autoplay: bool
+            Whether the song tile should autoplay.
         :return: :ref:`Song`
             returns the Song object.
         """
@@ -106,9 +109,9 @@ class Song:
         tiles = []
         for beat_number, notes_to_play in all_notes.items():
             for note in notes_to_play:
-                tiles.append(Note(note, beat_number))
+                tiles.append(Note(note, beat_number, autoplay=autoplay))
         return Song(
-            name=song.get("name"), tiles=tiles, spread=spread, height=floor_height
+            name=song.get("name"), tiles=tiles, spread=spread, height=floor_height, autoplay=autoplay
         )
 
     def play(self, scene, bpm, volume=0.1, tile_speed=1):
