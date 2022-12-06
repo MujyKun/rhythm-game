@@ -179,7 +179,28 @@ If your player health goes under 0, you lose the game, and you can start over by
   - Included Installation/Local Setup
   - Included Example Gifs
 ### [@DrewBieger](https://github.com/DrewBieger)
-...
+- Development
+  - Researched and implemented pause/play features for background songs to be played with pysdl2, as well as modified ppb to fit our needs.
+  - Implemented the Background to display a image behind every other object.
+  - Implemented the beat management system of the project (Conductor)
+  - Implemented the integration of both the music and sound system (Music, MusicController
+  - Implemented events for the user to play, stop, pause, and unpause music (ext_events)
+  - Implemented a feature to display the bpm of the song that is currently playing (BeatVisualizer, BeatTrigger)
+  - Implemented an event for the user to start a BeatVisualizer to be in sync with the music
+  - Created piano notes for the player to hit within beat (Note)
+  - Implemented Note’s calculation on where to set its own height based upon given speed, bpm, and the target’s y position.
+  - Added a health system for the Player to support multiple ways for the game to be scored (Player health, number of hits, number of misses, Player accuracy)
+  - Implemented an accuracy system for the tiles that uses Conductor’s time difference between the last note that was played and the next note that is played.
+  - Added collision detection system for BeatZone with Notes.
+  - Implemented a game over scene that would be played after the player "loses".
+  - Added a game over transition event with Player health hitting 0.
+- Assets
+  - Created a beat sound effect to be played on every beat with [jfxr](https://github.com/ttencate/jfxr). 
+- Documentation
+  - All code was documented with Sphinx/PIP8 standards.
+  - General Features documented in README.
+  - Created game design document.
+  - Created state transition document.
 
 ## [Copyrights](copyrights.md)
 Copyrighted content or content that requires a mention of the creators for usage can be found [here](copyrights.md).
