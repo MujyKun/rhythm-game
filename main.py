@@ -36,7 +36,7 @@ def setup(scene: ppb.Scene):
             music_name=MUSIC_NAME,
             bpm=BPM,
             floor_height=floor.top,
-            autoplay=False
+            autoplay=True
         ),
         floor,
     ]
