@@ -137,7 +137,39 @@ A rhythm game created for the CSCI-437 final project.
 ### Several Jumps
 ![Several Jumps](doc/example_gifs/several_jumps.gif)
 
-
-
-
-    
+## Contributions | Software Engineering Plan
+### [@MujyKun](https://github.com/MujyKun)
+- Development
+  - FPS Counter & Mouse Movement/Position [FPSScene].
+  - Text Labels to go on Screen [Label]
+  - Note Tile to be played in game [Note]
+  - Added Autoplay features so that the game can play itself.
+  - Implemented Gravity
+  - Implemented Player Movement (Several jumps, walking, horizontal/vertical movement, only floor jumping)
+  - Implemented advanced camera (can follow player, scroll, navigate outside of the canvas, zoom)
+  - Implemented majority Labels stay within the camera region if they were to zoom out or in.
+  - Added Dynamic Canvas Resolution to support a multitude of resolutions despite the object sizes. 
+  - Implemented animations to majority objects (Players, BeatZones, Background, ...)
+  - Added collision detection to Players, Notes, and Floors. 
+  - Implemented loading logic for songs. 
+  - Distributed tiles to be arranged in BeatZone columns.
+  - Built the framework for the game.
+  - Built demo.
+- Managed Dependencies
+  - Created a fork of the game engine library (PPB) to fix dependencies issues with the sound controllers.
+  - Project is now easily installable with pip or poetry. 
+- Assets
+  - Created animated player models for walking left, right, and standing still using the [Universal LPC Spritesheet Generator](https://sanderfrenken.github.io/Universal-LPC-Spritesheet-Character-Generator/#?body=Body_color_light&head=Human_male_light) 
+  - Created animated backgrounds 
+  - Utilized a piano note sound pack from [here](https://www.reddit.com/r/piano/comments/3u6ke7/heres_some_midi_and_mp3_files_for_individual/) 
+  - Generated Piano Tiles that reference the key being pressed in Photoshop
+  - Created BeatZone arrows and also added a glow effect when they are pressed.
+  - Designed structure for song JSON files.
+  - Implemented fonts into [resources](resources)
+- Documentation
+  - All code was documented with Sphinx/PIP8 standards. 
+  - General Features documented in README.
+  - Included Installation/Local Setup
+  - Included Example Gifs
+### [@DrewBieger](https://github.com/DrewBieger)
+...
