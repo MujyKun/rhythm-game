@@ -1,4 +1,6 @@
 import ppb
+
+import ext.ext_events
 from . import Label
 from ppb import Scene
 
@@ -39,6 +41,12 @@ class FPSScene(Scene):
         self._frame_label = Label(f"{self.avg_frame_rate:.2f} FPS", size=50)
         self._frame_label.position = ppb.Vector(self._fps_placement)
         self.add(self._frame_label)
+
+        from . import Player, EndScene
+        for player in self.get(kind=Player):
+            if player.health <= 0:
+                signal(ext.ext_events.StopMusic())
+                signal(ppb.events.ReplaceScene(EndScene()))
 
     def on_mouse_motion(self, mouse_motion: ppb.events.MouseMotion, signal):
         """Updates on mouse movement."""
