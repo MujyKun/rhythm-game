@@ -209,7 +209,7 @@ If your player health goes under 0, you lose the game, and you can start over by
   - Created game design document.
   - Created state transition document.
 
-## [Playable Demo](https://youtu.be/bUHFG86g91M)
+## [Playable Demo](https://youtu.be/2ClTZRxASbg)
 
 ## [Copyrights](copyrights.md)
 Copyrighted content or content that requires a mention of the creators for usage can be found [here](copyrights.md).
