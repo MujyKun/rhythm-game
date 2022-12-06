@@ -9,7 +9,7 @@ A rhythm game created for the CSCI-437 final project.
    1) ``pip install -r requirements.txt`` 
       1) If you do not have pip, you can install it with ``python get-pip.py`` or ``python -m ensurepip --upgrade``
    2) If you have poetry you can use ``poetry install``.  
-5) Start the program with `python main.py`  
+5) Start the program with `python main.py` or `poetry run python main.py` 
 
 ## How To Play
 After running the game, press `L` to start the song you have generated. 
@@ -178,6 +178,7 @@ If your player health goes under 0, you lose the game, and you can start over by
   - General Features documented in README.
   - Included Installation/Local Setup
   - Included Example Gifs
+  
 ### [@DrewBieger](https://github.com/DrewBieger)
 - Development
   - Researched and implemented pause/play features for background songs to be played with pysdl2, as well as modified ppb to fit our needs.
