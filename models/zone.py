@@ -19,6 +19,8 @@ class BeatZone(RectangleSprite):
         File location of the image.
     """
 
+    ACCEPT_RANGE = 0.25
+
     def __init__(self, position: tuple, image_location, glow_image_location, trigger_key):
         super(BeatZone, self).__init__()
         self._regular_image = Image(image_location)
@@ -60,13 +62,17 @@ class BeatZone(RectangleSprite):
             for player in self.scene.get(kind=Player):
                 # get time diff
                 for conduct in key_event.scene.get(kind=Conductor):
-                    time_diff = conduct.get_diff_time()
+                    last_time_diff = conduct.get_last_diff_time()
+                    next_time_diff = conduct.get_next_diff_time()
+                    close_to_last_beat = last_time_diff < self.ACCEPT_RANGE
+                    close_to_next_beat = next_time_diff < self.ACCEPT_RANGE
+                    close_to_beat = close_to_last_beat or close_to_next_beat
 
                 # remove/play tile and SCORE
                 for tile in key_event.scene.get(kind=Note):
                     if (check_in_range(tile.position.x, self.left, self.right) and
                             check_in_range(tile.position.y, self.bottom-1, self.top+0.5) and
-                            time_diff < 0.25):
+                            close_to_beat):
                         self.set_glow_image()
                         tile.play(signal)
                         tile.reset()
