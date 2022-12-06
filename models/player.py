@@ -301,5 +301,9 @@ class Player(Sprite):
 
     def on_key_released(self, key_event: KeyReleased, signal):
         """When a key is released."""
-        self.pressed_keys.remove(key_event.key)
+        try:
+            self.pressed_keys.remove(key_event.key)
+        except ValueError as e:
+            # Return due to just being init
+            return
         self._control_movement(key_event, reverse_motion=True)

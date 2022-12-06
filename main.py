@@ -1,7 +1,7 @@
 import logging
 
 import ppb
-from models import Player, Label, FPSScene, Floor, Note, Song, Background, Conductor
+from models import Player, FPSScene, Floor, Background, Conductor
 from ext import MusicController
 
 RES = (1080, 720)
