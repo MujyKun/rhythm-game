@@ -125,6 +125,12 @@ If your player health goes under 0, you lose the game, and you can start over by
 ### Different Player Types
 ![Different Players](doc/example_gifs/different_players.gif)
 
+### Game Over
+![Game Over](doc/example_gifs/game_over.gif)
+
+### Game Win
+![Game Win](doc/example_gifs/game_win.gif)
+
 ### "Earth" Gravity
 ![Earth Gravity](doc/example_gifs/earth_gravity.gif)
 
