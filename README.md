@@ -180,3 +180,6 @@ If your player health goes under 0, you lose the game, and you can start over by
   - Included Example Gifs
 ### [@DrewBieger](https://github.com/DrewBieger)
 ...
+
+## [Copyrights](copyrights.md)
+Copyrighted content or content that requires a mention of the creators for usage can be found [here](copyrights.md).
