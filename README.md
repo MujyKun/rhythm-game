@@ -11,6 +11,12 @@ A rhythm game created for the CSCI-437 final project.
    2) If you have poetry you can use ``poetry install``.  
 5) Start the program with `python main.py`  
 
+## How To Play
+After running the game, press `L` to start the song you have generated. 
+You can either use the player controls (W,A,S,D) to move the player around and collect the tiles at the beat zone, or you can 
+use the arrow keys (represented on the beat zones) on your keyboard to precisely time a falling tile on the beat zone. 
+If a falling tile goes past the beat zone (you miss), it will decrease your accuracy and player's health. 
+If your player health goes under 0, you lose the game, and you can start over by pressing `L`. Win the game by making it to the end!
 
 ## General/Optional Features
    - Frames Per Second (By default capped to 30 FPS)
@@ -155,6 +161,7 @@ A rhythm game created for the CSCI-437 final project.
   - Distributed tiles to be arranged in BeatZone columns.
   - Built the framework for the game.
   - Built demo.
+  - Implemented moons for backgrounds.
 - Managed Dependencies
   - Created a fork of the game engine library ([PPB](https://github.com/ppb/pursuedpybear)) to fix dependencies issues with the sound controllers.
   - Project is now easily installable with pip or poetry. 
