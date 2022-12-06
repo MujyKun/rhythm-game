@@ -41,6 +41,7 @@ from .floor import Floor
 from .label import Label
 from .player import Player
 from .fpsscene import FPSScene
+from .endscene import EndScene
 from .note import Note
 from .song import Song
 from .background import Background
