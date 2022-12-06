@@ -82,6 +82,9 @@ A rhythm game created for the CSCI-437 final project.
      - Layering has been implemented into sprites so that sprites on top are consistent.
 
 
+## Game Design Document
+![Game Design Document](doc/rhythm_game_game_design.png)
+
 
 ## Example GIFs
 
